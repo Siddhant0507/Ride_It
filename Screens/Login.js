@@ -36,6 +36,7 @@ const Login = ({navigation}) => {
       console.log('Invalid code.');
     }
   }
+  
 
   if (!confirm) {
     return (
@@ -64,7 +65,7 @@ const Login = ({navigation}) => {
             color: 'black',
             marginBottom: 15,
           }}>
-          Connect us via Mobile Number{' '}
+          Connect us via Mobile Number
         </Text>
         <Text style={{paddingBottom: 20}}> Verify Your account using OTP</Text>
         <TextInput
