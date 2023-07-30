@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
-import {app, database} from '../FirebaseConfig';
+import {app, database} from '../../FirebaseConfig';
 import {collection, addDoc} from 'firebase/firestore';
 
 const Signup = ({navigation}) => {
@@ -42,7 +42,7 @@ const Signup = ({navigation}) => {
     <>
       <Image
         style={{height: '40%', width: 'auto'}}
-        source={require('../assets/signup.jpg')}
+        source={require('../../src/res/images/signup.jpg')}
       />
       <ScrollView>
         <View style={{paddingTop: 20, paddingHorizontal: 20}}>

@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Button,
   Alert
 } from 'react-native';
 import React, {useState} from 'react';
@@ -55,7 +56,7 @@ const Login = ({navigation}) => {
     <>
       <Image
         style={{height: '50%', width: 'auto'}}
-        source={require('../assets/login.jpg')}
+        source={require('../../src/res/images/login.jpg')}
       />
       <View style={{padding: 30, justifyContent: 'center'}}>
         <Text

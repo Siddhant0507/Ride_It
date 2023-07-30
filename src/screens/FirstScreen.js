@@ -6,7 +6,7 @@ const FirstScreen = ({navigation}) => {
     <View style={{flex: 1}}>
       <Image
         style={{height: '70%', width: 'auto'}}
-        source={require('../assets/bike4.png')}
+        source={require('../../src/res/images/bike4.png')}
       />
       <TouchableOpacity
       onPress={()=>navigation.navigate("Login")}
