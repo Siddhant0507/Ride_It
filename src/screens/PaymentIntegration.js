@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View ,TouchableHighlight} from 'react-native'
 import React from 'react'
 import RazorpayCheckout from 'react-native-razorpay';
+
 const PaymentIntegration = () => {
   return (
     <View>
