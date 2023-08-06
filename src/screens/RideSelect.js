@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,FlatList,Image } from 'react-native';
 import React,{useState,useEffect} from 'react';
-import {app,database} from "../FirebaseConfig";
+import {app,database} from "../../FirebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 

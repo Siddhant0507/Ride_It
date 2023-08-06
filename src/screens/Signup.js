@@ -8,23 +8,24 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import { app, database } from '../../FirebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
 
-import {app, database} from '../../FirebaseConfig';
-import {collection, addDoc} from 'firebase/firestore';
-
-const Signup = ({navigation}) => {
+const Signup = ({ navigation }) => {
   const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [licenseNumber, setLicenseNumber] = useState('');
   const [PhoneNumber, setPhoneNumber] = useState('+91');
 
+
   const isButtonDisabled = !(username && email && licenseNumber && PhoneNumber);
 
   const collectionRef = collection(database, 'users');
 
-  const handleSubmit = () => {
-    addDoc(collectionRef, {
+  const handleSubmit = async () => {
+
+    await addDoc(collectionRef, {
       Name: username,
       email: email,
       phoneNumber: PhoneNumber,
@@ -34,18 +35,16 @@ const Signup = ({navigation}) => {
         Alert.alert('data added successfully');
         navigation.navigate('Otp');
       })
-      .catch(err => {
-        Alert.alert(err);
-      });
+
   };
   return (
     <>
       <Image
-        style={{height: '40%', width: 'auto'}}
+        style={{ height: '40%', width: 'auto' }}
         source={require('../../src/res/images/signup.jpg')}
       />
       <ScrollView>
-        <View style={{paddingTop: 20, paddingHorizontal: 20}}>
+        <View style={{ paddingTop: 20, paddingHorizontal: 20 }}>
           <Text> Name </Text>
           <TextInput
             style={{
@@ -61,7 +60,7 @@ const Signup = ({navigation}) => {
             value={username}
           />
 
-          <Text style={{paddingTop: 20}}> Phone Number </Text>
+          <Text style={{ paddingTop: 20 }}> Phone Number </Text>
           <TextInput
             style={{
               height: 45,
@@ -76,7 +75,7 @@ const Signup = ({navigation}) => {
             value={PhoneNumber}
           />
 
-          <Text style={{paddingTop: 20}}> Email ID</Text>
+          <Text style={{ paddingTop: 20 }}> Email ID</Text>
           <TextInput
             style={{
               height: 45,
@@ -91,7 +90,7 @@ const Signup = ({navigation}) => {
             value={email}
           />
 
-          <Text style={{paddingTop: 20}}> Driver Licenses Number </Text>
+          <Text style={{ paddingTop: 20 }}> Driver Licenses Number </Text>
           <TextInput
             style={{
               height: 45,
@@ -106,15 +105,15 @@ const Signup = ({navigation}) => {
             value={licenseNumber}
           />
         </View>
-      
+
       </ScrollView>
       <TouchableOpacity
         onPress={() => handleSubmit()}
         disabled={isButtonDisabled}
         style={[styles.button, isButtonDisabled && styles.disabledButton]}>
-        <Text style={{fontSize: 24, color: '#000'}}>Proceed</Text>
+        <Text style={{ fontSize: 24, color: '#000' }}>Proceed</Text>
       </TouchableOpacity>
-     
+
     </>
   );
 };

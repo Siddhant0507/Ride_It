@@ -1,15 +1,20 @@
 
 import React from 'react';
 
-import {Provider} from 'react-redux';
-import {store} from './Redux/Store';
-
+import { Provider } from 'react-redux';
+import { store } from './src/redux/store/store';
 import LoginStack from './src/navigation/LoginStack';
-// import HomeScreen from './Screens/HomeScreen';
+import HomeStack from './src/navigation/HomeStack'
 // import HomeStack from './Navigation/HomeStack';
 
 const App = () => {
-  return <LoginStack/>;
+  return (
+    <Provider store={store}>
+      {/* <LoginStack /> */}
+      <HomeStack/>
+    </Provider>
+  )
+
 };
 
 export default App;
