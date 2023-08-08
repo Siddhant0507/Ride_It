@@ -1,20 +1,26 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { useDispatch } from 'react-redux';
+import { PickUpDateTime } from '../redux/reducer/authReducer';
 
-const DateTimePicker = () => {
+const DateTimePicker = ({navigation}) => {
+  dispatch=useDispatch()
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('Select Date');
   const [selectedTime, setSelectedTime] = useState('Select Time');
 
+  
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
+  const detail={selectedDate,selectedTime}
 
   const handleDateConfirm = date => {
     const dt = new Date(date);
@@ -76,7 +82,9 @@ const DateTimePicker = () => {
         <Text style={{color:"#000",fontSize:20}}>{selectedTime}</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={{marginTop:20,height:55 , width:'60%',backgroundColor:`#ffa07a`, borderRadius:30,alignItems:'center',justifyContent:'center' ,marginTop:20 }}>
+      <TouchableOpacity style={{marginTop:20,height:55 , width:'60%',backgroundColor:`#ffa07a`, borderRadius:30,alignItems:'center',justifyContent:'center' ,marginTop:20 }}
+      onPress={()=>navigation.navigate("DropDateTime",dispatch(PickUpDateTime(detail)))}
+      >
         <Text style={{fontSize:24, color:"#000"}}>Next</Text>
     </TouchableOpacity>
 

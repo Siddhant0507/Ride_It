@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "763953825691",
+    "firebase_url": "https://whissride-test-1-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "whissride-test-1",
+    "storage_bucket": "whissride-test-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763953825691:android:9be58d093c38d47c5b033e",
+        "android_client_info": {
+          "package_name": "com.rideitnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763953825691-8i74v6p7khfko3p9e6qs6m13c8en6ghu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rideitnative",
+            "certificate_hash": "68ed7b235d441f9607f2bdf41fc98e9bb8615688"
+          }
+        },
+        {
+          "client_id": "763953825691-6ku27tngd9j28uthc5qpsbjcji8f04pc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiKV7rXjBzn4VeDrG4V7ja6ILOiGqXOts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763953825691-6ku27tngd9j28uthc5qpsbjcji8f04pc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
