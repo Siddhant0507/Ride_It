@@ -1,22 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { LoginData } from "../action/authAction";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const loginSlice = createSlice({
     name: "Login",
     initialState: {
-       
+        Ride: [],
+        pickUpData: [],
+        dropData: [],
         loading: false
     },
 
     reducers: {
+        BookRide: (state, action) => {
+            state.Ride = action.payload
 
+
+        },
+        PickUpDateTime: (state, action) => {
+            state.pickUpData = action.payload
+
+
+        },
+        DropTimeDate: (state, action) => {
+            state.dropData = action.payload
+
+        },
     },
-
-    extraReducers: builder => {
-
-   
-    }
-
 })
 
-export default loginSlice.reducer
+
+export const { BookRide, PickUpDateTime, DropTimeDate } = loginSlice.actions;
+export default loginSlice.reducer;

@@ -14,7 +14,6 @@ const HomeScreen = ({ navigation }) => {
   const [mLat, setMlat] = useState(0);
   const [mLong, setMlong] = useState(0);
   const [marker, setmarker] = useState({ latitude: 37.78825, longitude: -122.4324 });
-  console.log('====================================', marker);
 
   useEffect(() => {
     requestLocationPermission();
