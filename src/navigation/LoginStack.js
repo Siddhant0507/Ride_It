@@ -5,6 +5,11 @@ import FirstScreen from '../../src/screens/FirstScreen';
 import Login from '../../src/screens/Login';
 import OtpScreen from '../../src/screens/Otp';
 import Signup from '../../src/screens/Signup';
+import HomeScreen from '../../src/screens/HomeScreen'
+import RideSelect from '../../src/screens/RideSelect';
+import DateTimePicker from '../../src/screens/DateTimePicker';
+import DropDateTime from '../screens/DropDateTime';
+import BookingDetail from '../screens/BookingDetail';
 
 const LoginStack = () => {
   const Stack = createStackNavigator();
@@ -29,6 +34,31 @@ const LoginStack = () => {
          <Stack.Screen
           name="Signup"
           component={Signup}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="RideSelect"
+          component={RideSelect}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="DateTimePicker"
+          component={DateTimePicker}
+          options={{headerShown: false}}
+        />
+          <Stack.Screen
+          name="DropDateTime"
+          component={DropDateTime}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="BookingDetail"
+          component={BookingDetail}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
