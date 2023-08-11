@@ -5,12 +5,13 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
-  Image
+  Image,
+  ImageBackground
 } from "react-native";
 import React, { useRef, useState ,useEffect} from "react";
 import RNOtpVerify from 'react-native-otp-verify'
 import LinearGradient from "react-native-linear-gradient";
-
+import { CommonActions,StackActions } from '@react-navigation/native';
 const OtpScreen = ({route,navigation}) => {
   const { confirm } = route.params ?? { confirm: null }
   const [code, setCode] = useState('');
@@ -67,10 +68,14 @@ useEffect(()=>{
       // ToastAndroid.show('please Enter Valid Otp', ToastAndroid.SHORT);
       console.log('Invalid otp===', error)
     }
-    navigation.navigate("HomeScreen")
+    
+navigation.dispatch(
+  StackActions.replace("HomeScreen")
+);
   }
   return (
     <>
+     <ImageBackground source={require("../res/images/background.png")} style={{height:"100%",width:'100%',zIndex:-1}}/>
      <Image
         style={styles.topImage}
         source={require('../../src/res/images/Wheel.png')}
@@ -162,6 +167,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   container: {
+    position:'absolute',
     zIndex: 0,
     width: '90%',
     height: '100%',

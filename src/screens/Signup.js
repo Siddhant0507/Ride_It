@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ImageBackground
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {app, database} from '../../FirebaseConfig';
@@ -93,6 +94,7 @@ const Signup = ({navigation}) => {
   };
   return (
     <>
+     <ImageBackground source={require("../res/images/background.png")} style={{height:"100%",width:'100%',zIndex:-1}}/>
       <Image
         style={styles.topImage}
         source={require('../../src/res/images/Wheel.png')}
@@ -154,6 +156,7 @@ export default Signup;
 
 const styles = StyleSheet.create({
   container: {
+    position:'absolute',
     zIndex: 0,
     width: '90%',
     height: '100%',

@@ -1,10 +1,10 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 const FirstScreen = ({navigation}) => {
   return (
     <>
-   
+      <ImageBackground source={require("../res/images/background.png")} style={{height:"100%",width:'100%',zIndex:-1}}/>
       <Image
         style={styles.topImage}
         source={require('../../src/res/images/Wheel.png')}
@@ -40,6 +40,7 @@ export default FirstScreen;
 
 const styles = StyleSheet.create({
   container: {
+    position:'absolute',
     zIndex: 0,
     width: '90%',
     height: '100%',

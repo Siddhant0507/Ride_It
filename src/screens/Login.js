@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Image,
   Button,
-  Alert
+  Alert,
+  ImageBackground
 } from 'react-native';
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
@@ -55,6 +56,7 @@ const Login = ({navigation}) => {
 
   return (
     <>
+     <ImageBackground source={require("../res/images/background.png")} style={{height:"100%",width:'100%',zIndex:-1}}/>
       <Image
         style={styles.topImage}
         source={require('../../src/res/images/Wheel.png')}
@@ -99,6 +101,7 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
+    position:'absolute',
     zIndex: 0,
     width: '90%',
     height: '100%',
