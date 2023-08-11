@@ -111,7 +111,9 @@ const styles = StyleSheet.create({
     },
     touchableText: {
         color: "#000",
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: '600',
+
     },
     buttonStyle: {
         marginTop: 20,

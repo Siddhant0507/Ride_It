@@ -7,7 +7,8 @@ import RideSelect from '../../src/screens/RideSelect';
 import DateTimePicker from '../../src/screens/DateTimePicker';
 import DropDateTime from '../screens/DropDateTime';
 import BookingDetail from '../screens/BookingDetail';
-
+import PaymentIntegration from '../screens/PaymentIntegration';
+import BookingComplete from '../screens/BookingComplete';
 const HomeStack = () => {
   const Stack = createStackNavigator();
   return (
@@ -36,6 +37,16 @@ const HomeStack = () => {
          <Stack.Screen
           name="BookingDetail"
           component={BookingDetail}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="PaymentIntegration"
+          component={PaymentIntegration}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="BookingComplete"
+          component={BookingComplete}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
