@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const FirstScreen = ({navigation}) => {
   return (
     <>
+   
       <Image
         style={styles.topImage}
         source={require('../../src/res/images/Wheel.png')}
@@ -12,7 +13,11 @@ const FirstScreen = ({navigation}) => {
         style={styles.BottomImage}
         source={require('../../src/res/images/Wheel.png')}
       />
-      <LinearGradient colors={["#fff","#BDBDBD",90]} style={styles.container} useAngle={true} angle={180}>
+      <LinearGradient
+        colors={['#fff', '#BDBDBD']}
+        style={styles.container}
+        useAngle={true}
+        angle={180}>
         <Text style={styles.heading}>Welcome</Text>
 
         <TouchableOpacity
@@ -26,6 +31,7 @@ const FirstScreen = ({navigation}) => {
           <Text style={{fontSize: 18, color: '#fff'}}>Login</Text>
         </TouchableOpacity>
       </LinearGradient>
+
     </>
   );
 };
@@ -34,7 +40,7 @@ export default FirstScreen;
 
 const styles = StyleSheet.create({
   container: {
-    zIndex:0,
+    zIndex: 0,
     width: '90%',
     height: '100%',
     borderRadius: 31,
@@ -72,16 +78,16 @@ const styles = StyleSheet.create({
     width: '40%',
     position: 'absolute',
     top: 0,
-    zIndex:1
+    zIndex: 1,
   },
+
   BottomImage: {
     transform: [{rotate: '180deg'}],
     height: '30%',
     width: '40%',
-
     position: 'absolute',
     bottom: 0,
     right: 0,
-    zIndex:1
+    zIndex: 1,
   },
 });
