@@ -11,7 +11,7 @@ import React, { useRef, useState ,useEffect} from "react";
 import RNOtpVerify from 'react-native-otp-verify'
 import LinearGradient from "react-native-linear-gradient";
 
-const OtpScreen = (route) => {
+const OtpScreen = ({route,navigation}) => {
   const { confirm } = route.params ?? { confirm: null }
   const [code, setCode] = useState('');
   const [hash, setHash] = useState('');
@@ -52,6 +52,7 @@ useEffect(()=>{
 
   const confirmCode = async () => {
     try {
+      
       const Verify = await confirm.confirm(code);
       if (Verify) {
         //  setModalVisible(false)
@@ -59,13 +60,14 @@ useEffect(()=>{
       }
       console.log('code.=====', code);
       console.log('Verify.=====', Verify);
-
+      
     } catch (error) {
 
       //  setOtpError('Invalid otp......')
       // ToastAndroid.show('please Enter Valid Otp', ToastAndroid.SHORT);
       console.log('Invalid otp===', error)
     }
+    navigation.navigate("HomeScreen")
   }
   return (
     <>
