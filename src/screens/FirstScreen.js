@@ -1,45 +1,87 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
-
+import LinearGradient from 'react-native-linear-gradient';
 const FirstScreen = ({navigation}) => {
   return (
-    <View style={{flex: 1}}>
+    <>
       <Image
-        style={{height: '70%', width: 'auto'}}
-        source={require('../../src/res/images/bike4.png')}
+        style={styles.topImage}
+        source={require('../../src/res/images/Wheel.png')}
       />
-      <TouchableOpacity
-      onPress={()=>navigation.navigate("Login")}
-        style={{
-          height: 55,
-          width: '90%',
-          backgroundColor: `#ffa07a`,
-          borderRadius: 30,
-          alignItems: 'center',
-          justifyContent: 'center',
-          alignSelf: 'center',
-          marginTop: 20,
-        }}>
-        <Text style={{fontSize: 24, color: '#000'}}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-      onPress={()=>navigation.navigate("Signup")}
-        style={{
-          height: 55,
-          width: '90%',
-          backgroundColor: `#ffa07a`,
-          borderRadius: 30,
-          alignItems: 'center',
-          justifyContent: 'center',
-          alignSelf: 'center',
-          marginTop: 20,
-        }}>
-        <Text style={{fontSize: 24, color: '#000'}}>Signup</Text>
-      </TouchableOpacity>
-    </View>
+      <Image
+        style={styles.BottomImage}
+        source={require('../../src/res/images/Wheel.png')}
+      />
+      <LinearGradient colors={["#fff","#BDBDBD",90]} style={styles.container} useAngle={true} angle={180}>
+        <Text style={styles.heading}>Welcome</Text>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Signup')}
+          style={styles.Signupbutton}>
+          <Text style={{fontSize: 18, color: '#000'}}>Signup</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Login')}
+          style={styles.Loginbutton}>
+          <Text style={{fontSize: 18, color: '#fff'}}>Login</Text>
+        </TouchableOpacity>
+      </LinearGradient>
+    </>
   );
 };
 
 export default FirstScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    zIndex:0,
+    width: '90%',
+    height: '100%',
+    borderRadius: 31,
+    borderWidth: 0.7,
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: '30%',
+  },
+  heading: {
+    fontSize: 37,
+    fontWeight: '700',
+    marginTop: 70,
+    marginBottom: 100,
+  },
+  Loginbutton: {
+    height: 45,
+    width: '70%',
+    backgroundColor: '#000',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  Signupbutton: {
+    borderWidth: 0.7,
+    borderColor: '#000',
+    marginBottom: 20,
+    height: 45,
+    width: '70%',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  topImage: {
+    height: '30%',
+    width: '40%',
+    position: 'absolute',
+    top: 0,
+    zIndex:1
+  },
+  BottomImage: {
+    transform: [{rotate: '180deg'}],
+    height: '30%',
+    width: '40%',
+
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    zIndex:1
+  },
+});

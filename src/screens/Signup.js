@@ -165,7 +165,7 @@ const Signup = ({ navigation }) => {
         onPress={() => handleSubmit()}
         disabled={isButtonDisabled}
         style={[styles.button, isButtonDisabled && styles.disabledButton]}>
-        <Text style={{ fontSize: 24, color: '#000' }}>Proceed</Text>
+        <Text style={{ fontSize: 18, color: '#fff' }}>Signup</Text>
       </TouchableOpacity>
 
 
