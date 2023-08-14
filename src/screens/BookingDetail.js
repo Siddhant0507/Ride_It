@@ -2,9 +2,12 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-na
 import React from 'react'
 import { useSelector } from 'react-redux';
 import RazorpayCheckout from 'react-native-razorpay';
+import { collection, addDoc } from 'firebase/firestore';
+import { app, database } from '../../FirebaseConfig';
 
 const BookingDetail = ({ navigation }) => {
     const { Ride, pickUpData, dropData } = useSelector((state) => state.Login)
+    const collectionRef = collection(database, 'user_ride_details');
 
     // User input
     var time1 = pickUpData.selectedTime;
@@ -47,34 +50,47 @@ const BookingDetail = ({ navigation }) => {
     const totalCost = hours * hourlyRate;
     console.log('--=====totalCost===', totalCost);
 
-    const handlePayment = () => {
-        var options = {
-            description: 'Credits towards consultation',
-            image: 'https://i.imgur.com/3g7nmJC.jpg',
-            currency: 'INR',
-            key: 'rzp_test_ONNb6E3SJf1osK',
-            amount: '5000',
-            name: 'Rideit Services Pvt. Ltd.',
-            order_id: '',//Replace this with an order_id created using Orders API.
-            prefill: {
-                email: 'gaurav.kumar@example.com',
-                contact: '9191919191',
-                name: 'Gaurav Kumar'
-            },
-            theme: { color: '#ffa07a' }
-        }
-        RazorpayCheckout.open(options).then((data) => {
-            if (data) {
-                navigation.navigate('BookingComplete')
+    const handlePayment = async () => {
+        await addDoc(collectionRef, {
+            dropDate: dropData.dropDate,
+            dropTime: dropData.dropTime,
+            pickUpDate: pickUpData.selectedDate,
+            pickUpTime: pickUpData.selectedTime,
+            totalAmount: totalCost,
+            totalHours: hours,
+            vichleName: Ride.name
+        }).then((res) => {
+            // console.log('resss', res);
+            alert('save details susscessfully')
+            var options = {
+                description: 'Credits towards consultation',
+                image: 'https://i.imgur.com/3g7nmJC.jpg',
+                currency: 'INR',
+                key: 'rzp_test_ONNb6E3SJf1osK',
+                amount: '5000',
+                name: 'Rideit Services Pvt. Ltd.',
+                order_id: '',//Replace this with an order_id created using Orders API.
+                prefill: {
+                    email: 'gaurav.kumar@example.com',
+                    contact: '9191919191',
+                    name: 'Gaurav Kumar'
+                },
+                theme: { color: '#ffa07a' }
             }
-            // console.log('options', data);
-            // handle success
-            // alert(`Success: ${data.razorpay_payment_id}`);
-        }).catch((error) => {
-            // handle failure
-            Alert.alert(error.error.description);
+            RazorpayCheckout.open(options).then((data) => {
+                if (data) {
+                    navigation.navigate('BookingComplete')
+                }
+                // console.log('options', data);
+                // handle success
+                // alert(`Success: ${data.razorpay_payment_id}`);
+            }).catch((error) => {
+                // handle failure
+                Alert.alert(error.error.description);
+            });
         });
     }
+
     return (
         <View style={styles.container}>
             <Text style={styles.headingText}>BookingDetail</Text>

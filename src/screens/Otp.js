@@ -5,11 +5,14 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
+  Image,
+  ImageBackground
 } from "react-native";
 import React, { useRef, useState ,useEffect} from "react";
 import RNOtpVerify from 'react-native-otp-verify'
-
-const OtpScreen = (route) => {
+import LinearGradient from "react-native-linear-gradient";
+import { CommonActions,StackActions } from '@react-navigation/native';
+const OtpScreen = ({route,navigation}) => {
   const { confirm } = route.params ?? { confirm: null }
   const [code, setCode] = useState('');
   const [hash, setHash] = useState('');
@@ -50,6 +53,7 @@ useEffect(()=>{
 
   const confirmCode = async () => {
     try {
+      
       const Verify = await confirm.confirm(code);
       if (Verify) {
         //  setModalVisible(false)
@@ -57,18 +61,36 @@ useEffect(()=>{
       }
       console.log('code.=====', code);
       console.log('Verify.=====', Verify);
-
+      
     } catch (error) {
 
       //  setOtpError('Invalid otp......')
       // ToastAndroid.show('please Enter Valid Otp', ToastAndroid.SHORT);
       console.log('Invalid otp===', error)
     }
+    
+navigation.dispatch(
+  StackActions.replace("HomeScreen")
+);
   }
   return (
-    <SafeAreaView style={styles.mainBody}>
-      <Text style={styles.otpText}>Enter OTP</Text>
-      <View style={styles.container}>
+    <>
+     <ImageBackground source={require("../res/images/background.png")} style={{height:"100%",width:'100%',zIndex:-1}}/>
+     <Image
+        style={styles.topImage}
+        source={require('../../src/res/images/Wheel.png')}
+      />
+      <Image
+        style={styles.BottomImage}
+        source={require('../../src/res/images/Wheel.png')}
+      />
+    <LinearGradient  colors={['#fff', '#BDBDBD']}
+        style={styles.container}
+        useAngle={true}
+        angle={180}>
+      <Text style={styles.heading}>Enter OTP</Text>
+      <Text style={{}}>We have send OTP to this Number</Text>
+      <Text style={{fontSize:16,fontWeight:'700',textDecorationLine:'underline',paddingBottom:10}}>+91775703926</Text>
         <TextInput
           // ref={pin1Ref}
           keyboardType={"number-pad"}
@@ -118,14 +140,15 @@ useEffect(()=>{
             }
           }}
         /> */}
-      </View>
-      <TouchableOpacity style={{ marginTop: 20, height: 55, width: '90%', backgroundColor: `#ffa07a`, borderRadius: 30, alignItems: 'center', justifyContent: 'center', marginTop: 50 }}
+        
+      <TouchableOpacity style={styles.button}
       onPress={()=>confirmCode()}
       >
-        <Text style={{ fontSize: 24, color: "#000" }}>Next</Text>
+        <Text style={{ fontSize: 18, color: "#fff" }}>Next</Text>
       </TouchableOpacity>
-    </SafeAreaView>
-
+      <Text style={{fontWeight:'700',paddingTop:20}}>Didn't receive OTP ? Go Back</Text>
+    </LinearGradient>
+    </>
   );
 };
 
@@ -137,30 +160,57 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 30
   },
-  otpText: {
-    color: '#000',
-    fontSize: 25,
-    fontWeight: "700",
-    paddingLeft: 25,
-    paddingBottom: 20,
+  heading: {
+    fontSize: 37,
+    fontWeight: '700',
+    marginTop: 50,
+    marginBottom: 50,
   },
   container: {
-    display: "flex",
-    alignItems:'center'
-
-    // flexDirection: "row",
-
+    position:'absolute',
+    zIndex: 0,
+    width: '90%',
+    height: '100%',
+    borderRadius: 31,
+    borderWidth: 0.7,
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: '30%',
   },
-  input: {
-    marginHorizontal: 15,
-    height: 50,
-    width: 150,
-    borderBottomWidth: 1,
-    fontWeight: "700",
-    borderBottomColor: '#000',
-    fontSize: 20,
-    textAlign: "center",
-    alignContent: "center",
+  input:{
+    borderWidth: 0.7,
+    borderColor: '#000',
+    marginBottom: 20,
+    height: 45,
+    width: '70%',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 20,
+  },
+  button:{
+    height: 45,
+    width: '70%',
+    backgroundColor: '#000',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  topImage: {
+    height: '30%',
+    width: '40%',
+    position: 'absolute',
+    top: 0,
+    zIndex: 1,
+  },
+  BottomImage: {
+    transform: [{rotate: '180deg'}],
+    height: '25%',
+    width: '35%',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    zIndex: 1,
   },
 
 });
