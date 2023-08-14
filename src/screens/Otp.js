@@ -70,7 +70,7 @@ useEffect(()=>{
     }
     
 navigation.dispatch(
-  StackActions.replace("HomeScreen")
+  StackActions.replace("HomeStack")
 );
   }
   return (

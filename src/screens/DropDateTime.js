@@ -76,7 +76,7 @@ const DropDateTime = ({ navigation }) => {
                 <Text style={styles.touchableText}>{dropTime}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonStyle}
-                onPress={() => navigation.navigate("BookingDetail", dispatch(DropTimeDate(detail)))}
+                onPress={() => navigation.navigate("BookingComplete", dispatch(DropTimeDate(detail)))}
 
             >
                 <Text style={styles.touchableText}>Next</Text>
