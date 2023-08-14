@@ -9,7 +9,7 @@ import HomeStack from './src/navigation/HomeStack';
 const App = () => {
   return (
     <Provider store={store}>
-      {/* <LoginStack /> */}
+    {/* <LoginStack /> */}
       <HomeStack/>
 
     </Provider>
