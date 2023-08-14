@@ -8,11 +8,12 @@ import {
   Image,
   ImageBackground
 } from "react-native";
-import React, { useRef, useState ,useEffect} from "react";
+import React, { useRef, useState, useEffect } from "react";
 import RNOtpVerify from 'react-native-otp-verify'
 import LinearGradient from "react-native-linear-gradient";
-import { CommonActions,StackActions } from '@react-navigation/native';
-const OtpScreen = ({route,navigation}) => {
+import { CommonActions, StackActions } from '@react-navigation/native';
+
+const OtpScreen = ({ route, navigation }) => {
   const { confirm } = route.params ?? { confirm: null }
   const [code, setCode] = useState('');
   const [hash, setHash] = useState('');
@@ -28,55 +29,52 @@ const OtpScreen = ({route,navigation}) => {
   const [pin3, setPin3] = useState("");
   const [pin4, setPin4] = useState("");
 
-useEffect(()=>{
- 
-
-   RNOtpVerify.getOtp()
-     .then(p => {
-       RNOtpVerify.addListener(startOtpListener)
-       console.log('pppp', p);
-     }
-      //  use this hash in the message.
-     ).catch(p => console.log('p===catch', p));
-   }, [])
+  useEffect(() => {
+    RNOtpVerify.getOtp()
+      .then(p => {
+        RNOtpVerify.addListener(startOtpListener)
+        console.log('pppp', p);
+      }
+        //  use this hash in the message.
+      ).catch(p => console.log('p===catch', p));
+  }, [])
 
 
 
-   const startOtpListener = ((message) => {
-     console.log('message----', message);
-     const otp = (message);
-     console.log('otp----', otp);
-     setCode(otp);
-     RNOtpVerify.removeListener()
+  const startOtpListener = ((message) => {
+    console.log('message----', message);
+    const otp = (message);
+    console.log('otp----', otp);
+    setCode(otp);
+    RNOtpVerify.removeListener()
 
-     });
+  });
 
   const confirmCode = async () => {
     try {
-      
       const Verify = await confirm.confirm(code);
       if (Verify) {
         //  setModalVisible(false)
-        // NavigationServices.navigate(Screen.PROFILE_AFTER_SIGN_UP)
+        navigation.navigate('HomeScreen')
+
       }
       console.log('code.=====', code);
       console.log('Verify.=====', Verify);
-      
     } catch (error) {
 
       //  setOtpError('Invalid otp......')
       // ToastAndroid.show('please Enter Valid Otp', ToastAndroid.SHORT);
       console.log('Invalid otp===', error)
     }
-    
-navigation.dispatch(
-  StackActions.replace("HomeScreen")
-);
+
+    // navigation.dispatch(
+    //   StackActions.replace("HomeScreen")
+    // );
   }
   return (
     <>
-     <ImageBackground source={require("../res/images/background.png")} style={{height:"100%",width:'100%',zIndex:-1}}/>
-     <Image
+      <ImageBackground source={require("../res/images/background.png")} style={{ height: "100%", width: '100%', zIndex: -1 }} />
+      <Image
         style={styles.topImage}
         source={require('../../src/res/images/Wheel.png')}
       />
@@ -84,13 +82,13 @@ navigation.dispatch(
         style={styles.BottomImage}
         source={require('../../src/res/images/Wheel.png')}
       />
-    <LinearGradient  colors={['#fff', '#BDBDBD']}
+      <LinearGradient colors={['#fff', '#BDBDBD']}
         style={styles.container}
         useAngle={true}
         angle={180}>
-      <Text style={styles.heading}>Enter OTP</Text>
-      <Text style={{}}>We have send OTP to this Number</Text>
-      <Text style={{fontSize:16,fontWeight:'700',textDecorationLine:'underline',paddingBottom:10}}>+91775703926</Text>
+        <Text style={styles.heading}>Enter OTP</Text>
+        <Text style={{}}>We have send OTP to this Number</Text>
+        <Text style={{ fontSize: 16, fontWeight: '700', textDecorationLine: 'underline', paddingBottom: 10 }}>+91775703926</Text>
         <TextInput
           // ref={pin1Ref}
           keyboardType={"number-pad"}
@@ -102,7 +100,7 @@ navigation.dispatch(
           //     pin2Ref.current.focus();
           //   }
           // }}
-          onChangeText={(text)=>setCode(text)}
+          onChangeText={(text) => setCode(text)}
         />
         {/* <TextInput
           ref={pin2Ref}
@@ -140,15 +138,18 @@ navigation.dispatch(
             }
           }}
         /> */}
-        
-      <TouchableOpacity style={styles.button}
-      onPress={()=>confirmCode()}
-      >
-        <Text style={{ fontSize: 18, color: "#fff" }}>Next</Text>
-      </TouchableOpacity>
-      <Text style={{fontWeight:'700',paddingTop:20}}>Didn't receive OTP ? Go Back</Text>
-    </LinearGradient>
+
+
+
+        <TouchableOpacity style={styles.button}
+          onPress={() => confirmCode()}
+        >
+          <Text style={{ fontSize: 18, color: "#fff" }}>Next</Text>
+        </TouchableOpacity>
+        <Text style={{ fontWeight: '700', paddingTop: 20 }}>Didn't receive OTP ? Go Back</Text>
+      </LinearGradient>
     </>
+
   );
 };
 
@@ -166,8 +167,14 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 50,
   },
+  heading: {
+    fontSize: 37,
+    fontWeight: '700',
+    marginTop: 50,
+    marginBottom: 50,
+  },
   container: {
-    position:'absolute',
+    position: 'absolute',
     zIndex: 0,
     width: '90%',
     height: '100%',
@@ -177,7 +184,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: '30%',
   },
-  input:{
+  input: {
     borderWidth: 0.7,
     borderColor: '#000',
     marginBottom: 20,
@@ -188,7 +195,42 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 20,
   },
-  button:{
+  button: {
+    height: 45,
+    width: '70%',
+    backgroundColor: '#000',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  topImage: {
+    height: '30%',
+    width: '40%',
+    position: 'absolute',
+    top: 0,
+    zIndex: 1,
+    position: 'absolute',
+    zIndex: 0,
+    width: '90%',
+    height: '100%',
+    borderRadius: 31,
+    borderWidth: 0.7,
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: '30%',
+  },
+  input: {
+    borderWidth: 0.7,
+    borderColor: '#000',
+    marginBottom: 20,
+    height: 45,
+    width: '70%',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 20,
+  },
+  button: {
     height: 45,
     width: '70%',
     backgroundColor: '#000',
@@ -204,7 +246,16 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   BottomImage: {
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
+    height: '25%',
+    width: '35%',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    zIndex: 1,
+  },
+  BottomImage: {
+    transform: [{ rotate: '180deg' }],
     height: '25%',
     width: '35%',
     position: 'absolute',

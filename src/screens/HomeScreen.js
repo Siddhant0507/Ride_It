@@ -1,5 +1,5 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import Map from '../../src/components/Map';
 import {BiCurrentLocation} from 'react-icons/bi';
 import {PermissionsAndroid} from 'react-native';
@@ -7,6 +7,7 @@ import Geolocation from 'react-native-geolocation-service';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import BottomNavigator from '../navigation/BottomNavigator';
 
 const HomeScreen = ({navigation}) => {
   const mapRef = useRef(null);
@@ -72,12 +73,79 @@ const HomeScreen = ({navigation}) => {
     );
   };
 
+  const handleMarkerDrag = e => {
+    setMarker(e.nativeEvent.coordinate);
+  };
+
+  const customMapStyle = [
+    {
+      featureType: 'all',
+      elementType: 'geometry.fill',
+      stylers: [{color: '#f5f5f5'}],
+    },
+    {
+      featureType: 'all',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#808080'}],
+    },
+    {
+      featureType: 'all',
+      elementType: 'labels.text.stroke',
+      stylers: [{color: '#ffffff'}],
+    },
+    {
+      featureType: 'administrative.country',
+      elementType: 'geometry.stroke',
+      stylers: [{color: '#c0c0c0'}],
+    },
+    {
+      featureType: 'administrative.province',
+      elementType: 'geometry.stroke',
+      stylers: [{color: '#c0c0c0'}],
+    },
+    {
+      featureType: 'administrative.locality',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#000000'}],
+    },
+    {
+      featureType: 'landscape',
+      elementType: 'geometry.fill',
+      stylers: [{color: '#e9e9e9'}],
+    },
+    {
+      featureType: 'poi',
+      elementType: 'geometry.fill',
+      stylers: [{color: '#dadada'}],
+    },
+    {
+      featureType: 'poi.park',
+      elementType: 'geometry.fill',
+      stylers: [{color: '#c7c7c7'}],
+    },
+    {
+      featureType: 'road',
+      elementType: 'geometry.fill',
+      stylers: [{color: '#ffffff'}],
+    },
+    {
+      featureType: 'road',
+      elementType: 'geometry.stroke',
+      stylers: [{color: '#c0c0c0'}],
+    },
+    {
+      featureType: 'water',
+      elementType: 'geometry.fill',
+      stylers: [{color: '#e3e3e3'}],
+    },
+  ];
   return (
     <>
       <View style={{height: '60%', width: '100%'}}>
         <MapView
           ref={mapRef}
           style={{width: '100%', height: '100%'}}
+          customMapStyle={customMapStyle}
           provider={PROVIDER_GOOGLE}
           initialRegion={{
             latitude: 37.78825,
@@ -88,11 +156,16 @@ const HomeScreen = ({navigation}) => {
           {marker && (
             <Marker
               coordinate={marker}
+              draggable
+              onDragEnd={handleMarkerDrag}
               title="Your Location"
               description="here are you are"
-              identifier="origin"
-              image={require('../res/images/user.png')}
-            />
+              identifier="origin">
+              <Image
+                source={require('../res/images/user.png')}
+                style={{width: 50, height: 50}}
+              />
+            </Marker>
           )}
           {/* <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
               title='Your Location'
@@ -104,12 +177,12 @@ const HomeScreen = ({navigation}) => {
               latitude: 18.4604197875968,
               longitude: 73.83491983823866,
             }}
-            style={{height: 10, width: 20}}
             image={require('../res/images/location.png')}
             title="Pickup & Drop Location"
             description="Pickup and drop your Bike here"
-            identifier="origin"
-          />
+            identifier="origin">
+            <Image source={require} />
+          </Marker>
         </MapView>
 
         <View style={styles.googleAutocomplete}>
@@ -133,21 +206,6 @@ const HomeScreen = ({navigation}) => {
             }}
           />
         </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            getCurrentLocation();
-          }}
-          style={{
-            height: 55,
-            width: 55,
-            backgroundColor: '#fff',
-            borderRadius: 20,
-            position: 'absolute',
-            alignSelf: 'flex-end',
-            bottom: 20,
-            right: 20,
-          }}></TouchableOpacity>
       </View>
 
       <TouchableOpacity
@@ -180,14 +238,14 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 16,
   },
-  Ridebutton:{
-    marginVertical:30,
-    alignSelf:'center',
+  Ridebutton: {
+    marginVertical: 30,
+    alignSelf: 'center',
     height: 45,
     width: '90%',
     backgroundColor: '#000',
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 });
