@@ -7,7 +7,8 @@ import Geolocation from 'react-native-geolocation-service';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import BottomNavigator from '../navigation/BottomNavigator';
+// import BottomNavigator from '../navigation/BottomNavigator';
+// import LinearGradient from 'react-native-linear-gradient';
 
 const HomeScreen = ({navigation}) => {
   const mapRef = useRef(null);

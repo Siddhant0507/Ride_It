@@ -15,19 +15,20 @@ import { CommonActions, StackActions } from '@react-navigation/native';
 
 const OtpScreen = ({ route, navigation }) => {
   const { confirm } = route.params ?? { confirm: null }
+  console.log('yyyyy',confirm);
   const [code, setCode] = useState('');
   const [hash, setHash] = useState('');
 
 
-  const pin1Ref = useRef(null);
-  const pin2Ref = useRef(null);
-  const pin3Ref = useRef(null);
-  const pin4Ref = useRef(null);
+  // const pin1Ref = useRef(null);
+  // const pin2Ref = useRef(null);
+  // const pin3Ref = useRef(null);
+  // const pin4Ref = useRef(null);
 
-  const [pin1, setPin1] = useState("");
-  const [pin2, setPin2] = useState("");
-  const [pin3, setPin3] = useState("");
-  const [pin4, setPin4] = useState("");
+  // const [pin1, setPin1] = useState("");
+  // const [pin2, setPin2] = useState("");
+  // const [pin3, setPin3] = useState("");
+  // const [pin4, setPin4] = useState("");
 
   useEffect(() => {
     RNOtpVerify.getOtp()
@@ -67,9 +68,9 @@ const OtpScreen = ({ route, navigation }) => {
       console.log('Invalid otp===', error)
     }
 
-    // navigation.dispatch(
-    //   StackActions.replace("HomeScreen")
-    // );
+    navigation.dispatch(
+      StackActions.replace("HomeScreen")
+    );
   }
   return (
     <>

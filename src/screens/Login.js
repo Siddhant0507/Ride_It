@@ -9,37 +9,58 @@ import {
   Alert,
   ImageBackground
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import auth from '@react-native-firebase/auth';
 import LinearGradient from 'react-native-linear-gradient';
+import RNOtpVerify from 'react-native-otp-verify';
 
-const Login = ({navigation}) => {
-  const [text, setText] = useState('+91');
+const Login = ({ navigation }) => {
+  const [PhoneNumber, setPhoneNumber] = useState('');
 
+  const [confirm, setConfirm] = useState(null);
 
+  const [hash, setHash] = useState('');
 
-   // If null, no SMS has been sent
-   const [confirm, setConfirm] = useState(null);
+  useEffect(() => {
+    RNOtpVerify.getHash()
+      .then(hash => {
+        setHash(hash);
+        console.log('hash----', hash);
+        //use this hash in the message.
+      })
+      .catch(console.log);
+  }, []);
 
-   // verification code (OTP - One-Time-Passcode)
-   const [code, setCode] = useState('');
+  // If null, no SMS has been sent
 
-  const isButtonDisabled = !(text);
+  // verification code (OTP - One-Time-Passcode)
 
+  const isButtonDisabled = !(PhoneNumber);
 
-  const signInWithPhoneNumber=async(phoneNumber)=> {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    setConfirm(confirmation);
-  }
-
-  async function confirmCode() {
+  const signInWithPhoneNumber = async () => {
     try {
-      await confirm.confirm(code);
+      //  setIsLoading(true)
+      // alert('hiiiiii');
+      const confirmation = await auth().signInWithPhoneNumber(
+        '+91' + PhoneNumber,
+        true,
+        hash,
+      );
+      setConfirm(confirmation);
+      if (confirmation) {
+        navigation.navigate("Otp", { confirm: confirm })
+
+      }
+      //  setIsLoading(false);
+      //  setModalVisible(true)
+      console.log('confirmation======', confirmation);
     } catch (error) {
-      console.log('Invalid code.');
+      console.log('error======', error);
+      // ToastAndroid.show(error, ToastAndroid.SHORT);
+      //  setMobile('')
+      //  setIsLoading(false);
     }
-  }
-  
+  };
 
   // if (!confirm) {
   //   return (
@@ -51,12 +72,12 @@ const Login = ({navigation}) => {
   // }
 
   const handleCheckUserPhoneNumber = () => {
-    navigation.navigate("Otp")
+    signInWithPhoneNumber()
   }
 
   return (
     <>
-     <ImageBackground source={require("../res/images/background.png")} style={{height:"100%",width:'100%',zIndex:-1}}/>
+      <ImageBackground source={require("../res/images/background.png")} style={{ height: "100%", width: '100%', zIndex: -1 }} />
       <Image
         style={styles.topImage}
         source={require('../../src/res/images/Wheel.png')}
@@ -71,24 +92,24 @@ const Login = ({navigation}) => {
         useAngle={true}
         angle={180}>
         <Text style={styles.heading}>
-         Login
+          Login
         </Text>
-        <Text style={{paddingBottom:20}}> Verify Your account using OTP</Text>
+        <Text style={{ paddingBottom: 20 }}> Verify Your account using OTP</Text>
         <TextInput
           maxLength={13}
           style={styles.input}
-          onChangeText={setText}
+          onChangeText={(text) => setPhoneNumber(text)}
           keyboardType="phone-pad"
-          value={text}
+          value={PhoneNumber}
         />
-         <TouchableOpacity
-        disabled={isButtonDisabled}
-        onPress={()=>handleCheckUserPhoneNumber()}
-        style={[styles.button, isButtonDisabled && styles.disabledButton]}
-         >
-          <Text style={{fontSize: 18, color: '#fff'}}>Get OTP</Text>
+        <TouchableOpacity
+          disabled={isButtonDisabled}
+          onPress={() => handleCheckUserPhoneNumber()}
+          style={[styles.button, isButtonDisabled && styles.disabledButton]}
+        >
+          <Text style={{ fontSize: 18, color: '#fff' }}>Get OTP</Text>
         </TouchableOpacity>
-        <Text style={{padding: 20}}>
+        <Text style={{ padding: 20 }}>
           By continuing , You are agree to our Terms of Service and Privacy
           Policy
         </Text>
@@ -101,7 +122,7 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
-    position:'absolute',
+    position: 'absolute',
     zIndex: 0,
     width: '90%',
     height: '100%',
@@ -117,7 +138,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 50,
   },
-  input:{
+  input: {
     borderWidth: 0.7,
     borderColor: '#000',
     marginBottom: 20,
@@ -128,7 +149,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 20,
   },
-  button:{
+  button: {
     height: 45,
     width: '70%',
     backgroundColor: '#000',
@@ -148,7 +169,7 @@ const styles = StyleSheet.create({
   },
 
   BottomImage: {
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
     height: '25%',
     width: '35%',
     position: 'absolute',

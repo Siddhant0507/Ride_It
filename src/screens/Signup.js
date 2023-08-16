@@ -43,7 +43,7 @@ const Signup = ({navigation}) => {
   const signInWithPhoneNumber = async () => {
     try {
       //  setIsLoading(true)
-      alert('hiiiiii');
+      // alert('hiiiiii');
       const confirmation = await auth().signInWithPhoneNumber(
         '+91' + PhoneNumber,
         true,
@@ -88,7 +88,7 @@ const Signup = ({navigation}) => {
     }).then(() => {
       signInWithPhoneNumber();
       // confirmCode()
-      Alert.alert('data added successfully');
+      // Alert.alert('data added successfully');
       navigation.navigate('Otp', {confirm: confirm});
     });
   };

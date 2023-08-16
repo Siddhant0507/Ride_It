@@ -6,6 +6,7 @@ import RideHistory from '../screens/RideHistory';
 import Profile from '../screens/Profile';
 import LoginStack from './LoginStack';
 import HomeStack from './HomeStack';
+
 const Bottom = createBottomTabNavigator();
 
 const BottomNavigator = () => {

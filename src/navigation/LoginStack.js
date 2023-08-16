@@ -12,7 +12,6 @@ import DropDateTime from '../screens/DropDateTime';
 import BookingDetail from '../screens/BookingDetail';
 import HomeStack from './HomeStack';
 import BottomNavigator from './BottomNavigator';
-
 const LoginStack = () => {
   const Stack = createStackNavigator();
   return (
