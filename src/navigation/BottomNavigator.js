@@ -11,7 +11,7 @@ const Bottom = createBottomTabNavigator();
 
 const BottomNavigator = () => {
   return (
-    < Bottom.Navigator>
+    < Bottom.Navigator screenOptions={{headerShown:false}}>
       <Bottom.Screen
         name="Home"
         component={HomeStack}

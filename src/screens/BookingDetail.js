@@ -93,20 +93,26 @@ const BookingDetail = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.headingText}>BookingDetail</Text>
-            <Text style={styles.headingText}>Bike Name -{Ride.name}</Text>
-            <Image source={{ uri: Ride.Image }} style={styles.imgStyle} resizeMode="cover" />
-            <Text style={styles.headingText}>Pick Up Date -{pickUpData.selectedDate}</Text>
-            <Text style={styles.headingText}>Pick Up Time -{pickUpData.selectedTime}</Text>
-            <Text style={styles.headingText}>Drop Date -{dropData.dropDate}</Text>
-            <Text style={styles.headingText}>Drop Time -{dropData.dropTime}</Text>
-            <Text style={styles.headingText}>Total hours -{hours}</Text>
-            <Text style={styles.headingText}>Amount 40 rs.per hour -{totalCost}</Text>
-            <TouchableOpacity style={styles.touchableStyle}
-                onPress={() => handlePayment()}
-            >
-                <Text style={styles.touchableText}>Book Now</Text>
-            </TouchableOpacity>
+            <Text style={{ textAlign: 'center', marginTop: 20, fontSize: 20, color: 'black', fontWeight: 'bold' }}>BookingDetail</Text>
+            <View style={[styles.cardView, { backgroundColor: 'black' }]}>
+                <View style={[styles.innerCardView]}>
+                    <Image source={{ uri: Ride.Image }} style={styles.imgStyle} />
+                    <Text style={[styles.headingText, { alignSelf: 'center' ,marginTop:10}]}>{Ride.name}</Text>
+
+                </View>
+                <View style={{ marginLeft: 10, }}>
+                    <Text style={styles.headingText}>Pick Up Date -{pickUpData.selectedDate}</Text>
+                    <Text style={styles.headingText}>Pick Up Time -{pickUpData.selectedTime}</Text>
+                    <Text style={styles.headingText}>Drop Date -{dropData.dropDate}</Text>
+                    <Text style={styles.headingText}>Drop Time -{dropData.dropTime}</Text>
+                    <Text style={styles.headingText}>Total hours -{hours}</Text>
+                    <Text style={styles.headingText}>Amount-{totalCost}</Text>
+                    <TouchableOpacity style={styles.touchableStyle}
+                        onPress={() => handlePayment()}  >
+                        <Text style={styles.touchableText}>Book Now</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
     )
 }
@@ -117,28 +123,25 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        // justifyContent: 'center',
-        alignItems: 'center'
+        marginHorizontal: '8%'
     },
     headingText: {
-        color: '#000',
-        fontSize: 24,
+        color: '#fff',
+        fontSize: 16,
         fontWeight: '600',
-        marginTop: 20
     },
     imgStyle: {
-        width: 200,
-        height: 150,
-        marginTop: 10
+        width: 120,
+        height: 100,
+        resizeMode: 'contain',
+        borderRadius:15
     },
     touchableStyle: {
-        marginTop: 15,
-        height: 55,
-        width: '60%',
+        marginTop: 10,
         backgroundColor: `#ffa07a`,
         borderRadius: 30,
         alignItems: 'center',
-        justifyContent: 'center'
+        padding: 5
     },
     touchableText: {
         color: "#000",
@@ -146,5 +149,15 @@ const styles = StyleSheet.create({
         fontWeight: '600',
 
     },
-
+    cardView: {
+        marginTop: 15,
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        padding: 10
+    },
+    innerCardView: {
+        bottom: 20
+    }
 })
