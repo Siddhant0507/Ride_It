@@ -7,14 +7,15 @@ import {
   Alert,
   ImageBackground
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {app, database} from '../../FirebaseConfig';
-import {collection, addDoc} from 'firebase/firestore';
+import React, { useState, useEffect } from 'react';
+import { app, database } from '../../FirebaseConfig';
+import { collection, addDoc, getDoc } from 'firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import RNOtpVerify from 'react-native-otp-verify';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Signup = ({navigation}) => {
+const Signup = ({ navigation }) => {
   const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [licenseNumber, setLicenseNumber] = useState('');
@@ -85,16 +86,29 @@ const Signup = ({navigation}) => {
       email: email,
       phoneNumber: PhoneNumber,
       driverLicense: licenseNumber,
-    }).then(() => {
+    }).then(async (docRef) => {
+      const userId = JSON.stringify(docRef.id)
+      AsyncStorage.setItem('userId', userId)
+      console.log('Document ID:', userId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const userData = docSnap.data()
+        console.log("Document data:", userData);
+        const userId = JSON.stringify(userData)
+        AsyncStorage.setItem('userData', userId)
+      } else {
+        console.log("No such document exists!");
+      }
       signInWithPhoneNumber();
       // confirmCode()
-      // Alert.alert('data added successfully');
-      navigation.navigate('Otp', {confirm: confirm});
+      Alert.alert('data added successfully');
+      navigation.navigate('Otp', { confirm: confirm, });
     });
+
   };
   return (
     <>
-     <ImageBackground source={require("../res/images/background.png")} style={{height:"100%",width:'100%',zIndex:-1}}/>
+      <ImageBackground source={require("../res/images/background.png")} style={{ height: "100%", width: '100%', zIndex: -1 }} />
       <Image
         style={styles.topImage}
         source={require('../../src/res/images/Wheel.png')}
@@ -145,7 +159,7 @@ const Signup = ({navigation}) => {
           onPress={() => handleSubmit()}
           disabled={isButtonDisabled}
           style={[styles.button, isButtonDisabled && styles.disabledButton]}>
-          <Text style={{fontSize: 18, color: '#fff'}}>Signup</Text>
+          <Text style={{ fontSize: 18, color: '#fff' }}>Signup</Text>
         </TouchableOpacity>
       </LinearGradient>
     </>
@@ -156,7 +170,7 @@ export default Signup;
 
 const styles = StyleSheet.create({
   container: {
-    position:'absolute',
+    position: 'absolute',
     zIndex: 0,
     width: '90%',
     height: '100%',
@@ -203,7 +217,7 @@ const styles = StyleSheet.create({
   },
 
   BottomImage: {
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
     height: '25%',
     width: '35%',
     position: 'absolute',

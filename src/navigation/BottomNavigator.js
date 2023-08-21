@@ -4,7 +4,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import RideHistory from '../screens/RideHistory';
 import Profile from '../screens/Profile';
-import LoginStack from './LoginStack';
 import HomeStack from './HomeStack';
 
 const Bottom = createBottomTabNavigator();
@@ -20,7 +19,9 @@ const BottomNavigator = () => {
       <Bottom.Screen
         name="RideHistory"
         component={RideHistory}
-        options={{headerShown: false}}
+        options={{headerShown: false,
+        unmountOnBlur:true
+      }}
       />
       <Bottom.Screen
         name="Profile"

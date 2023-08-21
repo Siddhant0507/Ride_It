@@ -11,7 +11,7 @@ import {
 import React, { useRef, useState, useEffect } from "react";
 import RNOtpVerify from 'react-native-otp-verify'
 import LinearGradient from "react-native-linear-gradient";
-import { CommonActions, StackActions } from '@react-navigation/native';
+import {  StackActions } from '@react-navigation/native';
 
 const OtpScreen = ({ route, navigation }) => {
   const { confirm } = route.params ?? { confirm: null }

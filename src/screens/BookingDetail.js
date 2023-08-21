@@ -1,14 +1,28 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import RazorpayCheckout from 'react-native-razorpay';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc } from 'firebase/firestore';
 import { app, database } from '../../FirebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BookingDetail = ({ navigation }) => {
     const { Ride, pickUpData, dropData } = useSelector((state) => state.Login)
-    const collectionRef = collection(database, 'user_ride_details');
+    const [userId, setUserId] = useState('')
+    // const collectionRef = collection(database, 'user_ride_details');
+    const collectionRef = collection(database, 'user_ride_details')
 
+
+    useEffect(() => {
+        getUserID()
+    }, [])
+
+    const getUserID = async () => {
+        const jsonValue = await AsyncStorage.getItem('userId')
+        let userId = JSON.parse(jsonValue)
+        setUserId(userId)
+        console.log('AsynkStorageGetITEm---======', userId);
+    }
     // User input
     var time1 = pickUpData.selectedTime;
     var time2 = dropData.dropTime;
@@ -51,44 +65,51 @@ const BookingDetail = ({ navigation }) => {
     console.log('--=====totalCost===', totalCost);
 
     const handlePayment = async () => {
+
         await addDoc(collectionRef, {
-            dropDate: dropData.dropDate,
-            dropTime: dropData.dropTime,
-            pickUpDate: pickUpData.selectedDate,
-            pickUpTime: pickUpData.selectedTime,
-            totalAmount: totalCost,
-            totalHours: hours,
-            vichleName: Ride.name
-        }).then((res) => {
-            // console.log('resss', res);
-            alert('save details susscessfully')
-            var options = {
-                description: 'Credits towards consultation',
-                image: 'https://i.imgur.com/3g7nmJC.jpg',
-                currency: 'INR',
-                key: 'rzp_test_ONNb6E3SJf1osK',
-                amount: '5000',
-                name: 'Rideit Services Pvt. Ltd.',
-                order_id: '',//Replace this with an order_id created using Orders API.
-                prefill: {
-                    email: 'gaurav.kumar@example.com',
-                    contact: '9191919191',
-                    name: 'Gaurav Kumar'
-                },
-                theme: { color: '#ffa07a' }
-            }
-            RazorpayCheckout.open(options).then((data) => {
-                if (data) {
-                    navigation.navigate('BookingComplete')
+           
+                dropDate: dropData.dropDate,
+                dropTime: dropData.dropTime,
+                pickUpDate: pickUpData.selectedDate,
+                pickUpTime: pickUpData.selectedTime,
+                totalAmount: totalCost,
+                totalHours: hours,
+                vichleName: Ride.name,
+                use_id:userId
+          
+        })
+
+            .then((res) => {
+
+                console.log('resssBooking DEtail', res);
+                alert('save details susscessfully')
+                var options = {
+                    description: 'Credits towards consultation',
+                    image: 'https://i.imgur.com/3g7nmJC.jpg',
+                    currency: 'INR',
+                    key: 'rzp_test_ONNb6E3SJf1osK',
+                    amount: '5000',
+                    name: 'Rideit Services Pvt. Ltd.',
+                    order_id: '',//Replace this with an order_id created using Orders API.
+                    prefill: {
+                        email: 'gaurav.kumar@example.com',
+                        contact: '9191919191',
+                        name: 'Gaurav Kumar'
+                    },
+                    theme: { color: '#ffa07a' }
                 }
-                // console.log('options', data);
-                // handle success
-                // alert(`Success: ${data.razorpay_payment_id}`);
-            }).catch((error) => {
-                // handle failure
-                Alert.alert(error.error.description);
+                RazorpayCheckout.open(options).then((data) => {
+                    if (data) {
+                        navigation.navigate('BookingComplete')
+                    }
+                    // console.log('options', data);
+                    // handle success
+                    // alert(`Success: ${data.razorpay_payment_id}`);
+                }).catch((error) => {
+                    // handle failure
+                    Alert.alert(error.error.description);
+                });
             });
-        });
     }
 
     return (
@@ -97,7 +118,7 @@ const BookingDetail = ({ navigation }) => {
             <View style={[styles.cardView, { backgroundColor: 'black' }]}>
                 <View style={[styles.innerCardView]}>
                     <Image source={{ uri: Ride.Image }} style={styles.imgStyle} />
-                    <Text style={[styles.headingText, { alignSelf: 'center' ,marginTop:10}]}>{Ride.name}</Text>
+                    <Text style={[styles.headingText, { alignSelf: 'center', marginTop: 10 }]}>{Ride.name}</Text>
 
                 </View>
                 <View style={{ marginLeft: 10, }}>
@@ -134,7 +155,7 @@ const styles = StyleSheet.create({
         width: 120,
         height: 100,
         resizeMode: 'contain',
-        borderRadius:15
+        borderRadius: 15
     },
     touchableStyle: {
         marginTop: 10,

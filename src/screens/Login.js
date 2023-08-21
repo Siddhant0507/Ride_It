@@ -73,6 +73,9 @@ const Login = ({ navigation }) => {
 
   const handleCheckUserPhoneNumber = () => {
     signInWithPhoneNumber()
+    navigation.navigate("Otp")
+
+
   }
 
   return (

@@ -19,6 +19,7 @@ const RideSelect = ({navigation}) => {
     fetchData();
   }, []);
 
+
   return (
     <>
       <Text
