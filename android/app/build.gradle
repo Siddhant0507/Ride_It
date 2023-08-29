@@ -122,7 +122,7 @@ dependencies {
   implementation("com.google.firebase:firebase-analytics-ktx")
  implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
  implementation("com.google.firebase:firebase-auth-ktx")
-  implementation 'com.google.firebase:firebase-auth'
+//   implementation 'com.google.firebase:firebase-auth'
 
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
