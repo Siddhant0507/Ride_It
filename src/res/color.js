@@ -13,7 +13,8 @@ export default colors = {
     green: '#00FF1A',
     background: '#E8E8E8',
     button_background: '#B7B7B7',
-    profile:'#AAAAAA'
+    profile:'#AAAAAA',
+    background_date_time:'#D9D9D9'
     
 
 

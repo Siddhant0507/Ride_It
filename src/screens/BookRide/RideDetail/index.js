@@ -5,7 +5,7 @@ import RazorpayCheckout from 'react-native-razorpay';
 import { collection, addDoc, updateDoc } from 'firebase/firestore';
 import { app, database } from '../../../../FirebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Screen } from '../../../constants/Screen';import R from '../../../res/R'
+import { Screen } from '../../../constants/Screen'; import R from '../../../res/R'
 import Header from '../../../components/Header'
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { moderateScale } from '../../../utills/Scalling';
@@ -26,7 +26,7 @@ const RideDetail = ({ navigation }) => {
         const jsonValue = await AsyncStorage.getItem('userId')
         let userId = JSON.parse(jsonValue)
         setUserId(userId)
-        console.log('AsynkStorageGetITEm---======', userId);
+        // console.log('AsynkStorageGetITEm---======', userId);
     }
     // User input
     var time1 = pickUpData.selectedTime;
@@ -74,18 +74,15 @@ const RideDetail = ({ navigation }) => {
     console.log('--=====totalCost===', totalCost);
 
     const handlePayment = async () => {
-
         await addDoc(collectionRef, {
-           
-                dropDate: dropData.dropDate,
-                dropTime: dropData.dropTime,
-                pickUpDate: pickUpData.selectedDate,
-                pickUpTime: pickUpData.selectedTime,
-                totalAmount: totalCost,
-                totalHours: roundedHours,
-                vichleName: Ride.name,
-                use_id:userId
-          
+            dropDate: dropData.dropDate,
+            dropTime: dropData.dropTime,
+            pickUpDate: pickUpData.selectedDate,
+            pickUpTime: pickUpData.selectedTime,
+            totalAmount: totalCost,
+            totalHours: roundedHours,
+            vichleName: Ride.name,
+            use_id: userId
         })
 
             .then((res) => {
@@ -125,40 +122,40 @@ const RideDetail = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={{ alignItems: 'center', }}>
-                <Image source={R.images.ride_detail} style={{ top: 0, position: 'relative', }} />
+                <Image source={R.images.ride_detail} style={styles.topBacgroundImg} />
 
             </View>
-            <View style={{ position: 'absolute', marginTop: hp(2) }}>
+            <View style={styles.headerView}>
                 <Header source={R.Icon.light_arrow}
                     onPress={() => navigation.goBack()} />
 
-                <View style={{ flexDirection: 'row', marginTop: hp(2), justifyContent: 'space-between', width: moderateScale(300), paddingLeft: moderateScale(15) }}>
+                <View style={styles.modalView}>
                     <View>
-                        <Text style={{ color: '#868686', fontSize: R.FontSize.F_1, fontFamily: R.Fonts.REGULAR }}>Model Booking</Text>
-                        <Text style={{ color: R.colors.white, fontSize: moderateScale(18), fontFamily: R.Fonts.BOLD }}>{Ride.name}</Text>
+                        <Text style={styles.modalBookingText}>Model Booking</Text>
+                        <Text style={styles.ridenameText}>{Ride.name}</Text>
 
                     </View>
-                    <View style={{ borderColor: '#626262', borderWidth: 1, height: moderateScale(40), width: moderateScale(81), borderRadius: moderateScale(10), justifyContent: 'center' }}>
-                        <Text style={{ color: 'white', textAlign: 'center' }}>40 rs/hr</Text>
+                    <View style={styles.hrRateView}>
+                        <Text style={styles.hrRateText}>40 rs/hr</Text>
                     </View>
 
                 </View>
-                <View style={{ borderBottomWidth: 1, borderBottomColor: '#626262', marginTop: hp(2), borderStyle: 'dashed', left: moderateScale(10) }}>
+                <View style={styles.horzontalView}>
 
                 </View>
 
-                <Text style={{ color: '#868686', fontSize: R.FontSize.F_1, fontFamily: R.Fonts.BOLD, marginHorizontal: '6%', marginTop: hp(2) }}>Total hours</Text>
+                <Text style={styles.totalHoursText}>Total hours</Text>
                 <View style={styles.innerDateView}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={styles.flexView}>
                         <Text style={styles.innerDateViewText}>{roundedHours} hrs</Text>
-                        <View style={{ borderColor: '#3F3F3F', borderWidth: 1, height: moderateScale(27), width: moderateScale(75), borderRadius: moderateScale(25), flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                            <Image source={R.Icon.input_icon} style={{ tintColor: R.colors.white, height: moderateScale(10), width: moderateScale(10) }} />
+                        <View style={styles.changeView}>
+                            <Image source={R.Icon.input_icon} style={styles.changeImg} />
                             <Text style={styles.innerTimeText} >change</Text>
 
                         </View>
                     </View>
 
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={styles.flexView}>
                         <View>
                             <Text style={styles.innerdateButtonText}>Sun ,{pickUpData.selectedDate}</Text>
                             <Text style={styles.innerTimeText} >{pickUpData.selectedTime}</Text>
@@ -173,7 +170,7 @@ const RideDetail = ({ navigation }) => {
                 </View>
 
             </View>
-            <View style={{ backgroundColor: '#E7E7E7', height: height, bottom: 0, marginTop: hp(1), borderTopLeftRadius: moderateScale(15), borderTopRightRadius: moderateScale(15), marginHorizontal: '-3%' }}>
+            <View style={styles.touchableView}>
                 <TouchableOpacity style={styles.touchableStyle}>
                     <Text style={styles.touchableText}>{totalCost}</Text>
                     <View style={{ flexDirection: 'row' }}>
@@ -181,43 +178,40 @@ const RideDetail = ({ navigation }) => {
                         <Text style={styles.touchableSummaryText}>Fare summary</Text>
                     </View>
                 </TouchableOpacity>
-                <View style={{ borderWidth: 1, padding: 5, borderRadius: moderateScale(20), marginHorizontal: '4%', borderColor: '#7F7F7F', flexDirection: 'row', bottom: moderateScale(30) }}>
+                <View style={styles.lastbackgroundView}>
                     <View>
-                        <Image source={R.images.bike_img} style={{ height: moderateScale(70), width: moderateScale(70), resizeMode: 'contain' }} />
+                        <Image source={R.images.bike_img} style={styles.bike_img} />
                     </View>
                     <View style={{ marginLeft: moderateScale(10) }}>
-                        <Text style={{ color: 'black', fontFamily: R.Fonts.BOLD, fontSize: moderateScale(14) }}>Cancellation Charges</Text>
-                        <Text style={{ color: '#B0B0B0', fontFamily: R.Fonts.LIGHT, fontSize: moderateScale(10), width: moderateScale(190) }}>Cancellation charges will be applied as per the polices</Text>
-                        <TouchableOpacity style={{ borderWidth: 1, borderRadius: 20, width: moderateScale(90), height: moderateScale(30), justifyContent: 'center', marginTop: hp(1) }}>
-                            <Text style={{ textAlign: 'center', color: '#7A7A7A', fontFamily: R.Fonts.LIGHT, fontSize: moderateScale(10) }}>View policy</Text>
+                        <Text style={styles.chargeText}>Cancellation Charges</Text>
+                        <Text style={styles.policyText}>Cancellation charges will be applied as per the polices</Text>
+                        <TouchableOpacity style={styles.touchableViewPolicy}>
+                            <Text style={styles.touchableViewPolicyText}>View policy</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{ padding: 5, borderRadius: moderateScale(20), marginHorizontal: '4%', backgroundColor: 'white', bottom: hp(2) }}>
+                <View style={styles.agrementView}>
 
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', padding: 10 }}>
+                    <View style={styles.inneragrementview}>
 
                         <Image source={R.Icon.contract_icon} />
-                        <View style={{ width: moderateScale(230), marginLeft: moderateScale(10) }}>
-                            <Text style={{ color: 'black', fontFamily: R.Fonts.BOLD, fontSize: moderateScale(14) }} >Agreement policy</Text>
-                            <Text style={{ color: '#B0B0B0', fontFamily: R.Fonts.LIGHT, fontSize: moderateScale(10) }} >I here by agree to the term and conditions of lease agreement with host </Text>
-                            <Text style={{ color: '#4C4C4C', marginTop: hp(1), borderBottomWidth: 1, alignSelf: 'baseline' }}>See details</Text>
+                        <View style={styles.policyTextView}>
+                            <Text style={styles.agrementpolicyText} >Agreement policy</Text>
+                            <Text style={styles.termsText} >I here by agree to the term and conditions of lease agreement with host </Text>
+                            <Text style={styles.detailText}>See details</Text>
                         </View>
                         <Image source={R.Icon.checkBox_icon} />
 
                     </View>
                 </View>
-                <View style={{
-                    backgroundColor: '#222222',
-                    borderRadius: moderateScale(10),
-                    marginHorizontal: '10%',
-                    marginTop: hp(5),
-                    alignItems: 'center'
-                }}>
-                    <Button
-                        title={'Pay'} 
-                        onPress={() => handlePayment()} />
-                </View>
+
+            </View>
+            <View style={styles.buttonView}>
+                <Button
+                    title={'Pay'}
+                    isImg={true}
+                    source={R.Icon.pay_arrow}
+                    onPress={() => handlePayment()} />
             </View>
         </View>
     )
@@ -232,6 +226,62 @@ const styles = StyleSheet.create({
         height: height,
 
 
+    },
+    topBacgroundImg: {
+        top: 0,
+        position: 'relative',
+    },
+    headerView: {
+        position: 'absolute',
+        marginTop: hp(2)
+    },
+    modalView: {
+        flexDirection: 'row',
+        marginTop: hp(2),
+        justifyContent: 'space-between',
+        width: moderateScale(300),
+        paddingLeft: moderateScale(15)
+    },
+
+    modalBookingText: {
+        color: '#868686',
+        fontSize: R.FontSize.F_1,
+        fontFamily: R.Fonts.REGULAR
+    },
+    ridenameText: {
+        color: R.colors.white,
+        fontSize: moderateScale(18),
+        fontFamily: R.Fonts.BOLD
+    },
+    hrRateView: {
+        borderColor: '#626262',
+        borderWidth: 1,
+        height: moderateScale(40),
+        width: moderateScale(81),
+        borderRadius: moderateScale(10),
+        justifyContent: 'center'
+    },
+    hrRateText: {
+        color: 'white',
+        textAlign: 'center'
+    },
+    horzontalView: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#626262',
+        marginTop: hp(2),
+        borderStyle: 'dashed',
+        left: moderateScale(10)
+    },
+    totalHoursText: {
+        color: '#868686',
+        fontSize: R.FontSize.F_1,
+        fontFamily: R.Fonts.BOLD,
+        marginHorizontal: '6%',
+        marginTop: hp(2)
+    },
+    flexView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     innerDateView: {
         // flexDirection: 'row',
@@ -255,6 +305,21 @@ const styles = StyleSheet.create({
         fontFamily: R.Fonts.BOLD,
 
     },
+    changeView: {
+        borderColor: '#3F3F3F',
+        borderWidth: 1,
+        height: moderateScale(27),
+        width: moderateScale(75),
+        borderRadius: moderateScale(25),
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center'
+    },
+    changeImg: {
+        tintColor: R.colors.white,
+        height: moderateScale(10),
+        width: moderateScale(10)
+    },
     innerTimeText: {
         color: '#BEB1B1',
         fontSize: moderateScale(10),
@@ -277,6 +342,16 @@ const styles = StyleSheet.create({
         color: '#BEB1B1',
         fontSize: moderateScale(10),
         fontFamily: R.Fonts.BOLD
+    },
+    touchableView: {
+        backgroundColor: '#E7E7E7',
+        height: height,
+        bottom: 0,
+        marginTop: hp(1),
+        borderTopLeftRadius: moderateScale(15),
+        borderTopRightRadius: moderateScale(15),
+        marginHorizontal: '-3%',
+        position: 'relative'
     },
     touchableStyle: {
         backgroundColor: R.colors.black,
@@ -307,4 +382,84 @@ const styles = StyleSheet.create({
         width: moderateScale(16),
         resizeMode: 'contain',
     },
+    lastbackgroundView: {
+        borderWidth: 1,
+        padding: 5,
+        borderRadius: moderateScale(20),
+        marginHorizontal: '4%',
+        borderColor: '#7F7F7F',
+        flexDirection: 'row',
+        bottom: moderateScale(30)
+    },
+    bike_img: {
+        height: moderateScale(70),
+        width: moderateScale(70),
+        resizeMode: 'contain'
+    },
+    chargeText: {
+        color: 'black',
+        fontFamily: R.Fonts.BOLD,
+        fontSize: moderateScale(14)
+    },
+    policyText: {
+        color: '#B0B0B0',
+        fontFamily: R.Fonts.LIGHT,
+        fontSize: moderateScale(10),
+        width: moderateScale(190)
+    },
+    touchableViewPolicy: {
+        borderWidth: 1,
+        borderRadius: 20,
+        width: moderateScale(90),
+        height: moderateScale(30),
+        justifyContent: 'center',
+        marginTop: hp(1)
+    },
+    touchableViewPolicyText: {
+        textAlign: 'center',
+        color: '#7A7A7A',
+        fontFamily: R.Fonts.LIGHT,
+        fontSize: moderateScale(10)
+    },
+    agrementView: {
+        padding: 5,
+        borderRadius: moderateScale(20),
+        marginHorizontal: '4%',
+        backgroundColor: 'white',
+        bottom: hp(2)
+    },
+    inneragrementview: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        padding: 10
+    },
+    policyTextView: {
+        width: moderateScale(230),
+        marginLeft: moderateScale(10)
+    },
+    agrementpolicyText: {
+        color: 'black',
+        fontFamily: R.Fonts.BOLD,
+        fontSize: moderateScale(14)
+    },
+    termsText: {
+        color: '#B0B0B0',
+        fontFamily: R.Fonts.LIGHT,
+        fontSize: moderateScale(10)
+    },
+    detailText: {
+        color: '#4C4C4C',
+        marginTop: hp(1),
+        borderBottomWidth: 1,
+        alignSelf: 'baseline'
+    },
+    buttonView: {
+        backgroundColor: '#222222',
+        borderRadius: moderateScale(10),
+        marginHorizontal: '10%',
+        alignItems: 'center',
+        // marginTop:hp(2)
+        position: "absolute",
+        bottom: 20
+    }
 })

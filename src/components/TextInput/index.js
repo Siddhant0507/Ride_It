@@ -31,7 +31,7 @@ const UserInput = (props) => {
     } = props;
 
     return (
-        <View>
+        <>
             <Text style={styles.titleText}>{inputTitle}</Text>
             <View style={styles.container}>
                 <TextInput
@@ -64,7 +64,7 @@ const UserInput = (props) => {
             <Text style={styles.errorText}>
                 {error ?? ""}
             </Text>
-        </View>
+        </>
     );
 };
 
@@ -73,8 +73,6 @@ export default UserInput;
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         backgroundColor: R.colors.background,
         borderRadius: moderateScale(10),
         shadowColor: R.colors.black,
@@ -83,13 +81,16 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         elevation: 5,
         alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+
 
     },
     titleText: {
         fontSize: moderateScale(10),
         color: R.colors.profile,
         fontFamily: R.Fonts.REGULAR,
-        marginLeft: moderateScale(15)
+        marginLeft: moderateScale(15),
     },
     input: {
         fontSize: moderateScale(14),
@@ -97,9 +98,8 @@ const styles = StyleSheet.create({
         color: R.colors.black,
         borderRadius: moderateScale(10),
         fontFamily: R.Fonts.MEDIUM,
-        ///
         width: wp(57),
-        height: hp(5),
+
     },
     errorText: {
         fontSize: moderateScale(14),

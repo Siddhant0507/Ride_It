@@ -1,39 +1,37 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import {BiCurrentLocation} from 'react-icons/bi';
-import {PermissionsAndroid} from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { BiCurrentLocation } from 'react-icons/bi';
+import { PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import BottomNavigator from '../navigation/BottomNavigator';
 // import LinearGradient from 'react-native-linear-gradient';
 import BottomTab from '../../../components/BottomTab';
 import { Screen } from '../../../constants/Screen';
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
   const mapRef = useRef(null);
 
-  const [mLat, setMlat] = useState(0);
-  const [mLong, setMlong] = useState(0);
-  const [marker, setmarker] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
-  });
+  const [currentUserLocation, setCurrentUserLocation] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
 
   useEffect(() => {
     requestLocationPermission();
   }, []);
 
-  const moveToLocation = () => {
-    mapRef.current.animateToRegion(
-      {
+  const moveToLocation = (latitude, longitude) => {
+    if (mapRef.current) {
+      mapRef.current.animateToRegion({
         latitude: latitude,
         longitude: longitude,
         latitudeDelta: 0.005,
         longitudeDelta: 0.005,
-      },
-      2000,
-    );
+      }, 2000);
+    }
   };
 
   const requestLocationPermission = async () => {
@@ -51,6 +49,17 @@ const HomeScreen = ({navigation}) => {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        Geolocation.getCurrentPosition(
+          position => {
+            const { latitude, longitude } = position.coords;
+            setCurrentUserLocation({ latitude, longitude })
+            moveToLocation(latitude, longitude);
+          },
+          error => {
+            console.log('error====', error);
+          },
+          { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+        );
         console.log('You can use the Location');
       } else {
         console.log('Location permission denied');
@@ -60,19 +69,7 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  const getCurrentLocation = () => {
-    Geolocation.getCurrentPosition(
-      position => {
-        console.log(position);
-        setMlat(position.coords.latitude);
-        setMlong(position.coords.longitude);
-      },
-      error => {
-        console.log(error.code, error.message);
-      },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-    );
-  };
+
 
   const handleMarkerDrag = e => {
     setMarker(e.nativeEvent.coordinate);
@@ -82,70 +79,70 @@ const HomeScreen = ({navigation}) => {
     {
       featureType: 'all',
       elementType: 'geometry.fill',
-      stylers: [{color: '#f5f5f5'}],
+      stylers: [{ color: '#f5f5f5' }],
     },
     {
       featureType: 'all',
       elementType: 'labels.text.fill',
-      stylers: [{color: '#808080'}],
+      stylers: [{ color: '#808080' }],
     },
     {
       featureType: 'all',
       elementType: 'labels.text.stroke',
-      stylers: [{color: '#ffffff'}],
+      stylers: [{ color: '#ffffff' }],
     },
     {
       featureType: 'administrative.country',
       elementType: 'geometry.stroke',
-      stylers: [{color: '#c0c0c0'}],
+      stylers: [{ color: '#c0c0c0' }],
     },
     {
       featureType: 'administrative.province',
       elementType: 'geometry.stroke',
-      stylers: [{color: '#c0c0c0'}],
+      stylers: [{ color: '#c0c0c0' }],
     },
     {
       featureType: 'administrative.locality',
       elementType: 'labels.text.fill',
-      stylers: [{color: '#000000'}],
+      stylers: [{ color: '#000000' }],
     },
     {
       featureType: 'landscape',
       elementType: 'geometry.fill',
-      stylers: [{color: '#e9e9e9'}],
+      stylers: [{ color: '#e9e9e9' }],
     },
     {
       featureType: 'poi',
       elementType: 'geometry.fill',
-      stylers: [{color: '#dadada'}],
+      stylers: [{ color: '#dadada' }],
     },
     {
       featureType: 'poi.park',
       elementType: 'geometry.fill',
-      stylers: [{color: '#c7c7c7'}],
+      stylers: [{ color: '#c7c7c7' }],
     },
     {
       featureType: 'road',
       elementType: 'geometry.fill',
-      stylers: [{color: '#ffffff'}],
+      stylers: [{ color: '#ffffff' }],
     },
     {
       featureType: 'road',
       elementType: 'geometry.stroke',
-      stylers: [{color: '#c0c0c0'}],
+      stylers: [{ color: '#c0c0c0' }],
     },
     {
       featureType: 'water',
       elementType: 'geometry.fill',
-      stylers: [{color: '#e3e3e3'}],
+      stylers: [{ color: '#e3e3e3' }],
     },
   ];
   return (
     <>
-      <View style={{height: '60%', width: '100%'}}>
+      <View style={{ height: '60%', width: '100%' }}>
         <MapView
           ref={mapRef}
-          style={{width: '100%', height: '100%'}}
+          style={{ width: '100%', height: '100%' }}
           customMapStyle={customMapStyle}
           provider={PROVIDER_GOOGLE}
           initialRegion={{
@@ -154,52 +151,61 @@ const HomeScreen = ({navigation}) => {
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
           }}>
-          {marker && (
-            <Marker
-              coordinate={marker}
+
+          {currentUserLocation &&
+            (<Marker
+              coordinate={currentUserLocation}
               draggable
-              onDragEnd={handleMarkerDrag}
+              // onDragEnd={handleMarkerDrag}
+              title="Pickup & Drop Location"
+              description="Pickup and drop your Bike here"
+              identifier="origin">
+              <Image source={require('../../../res/images/user.png')}
+                style={{ width: 50, height: 50 }}
+              />
+            </Marker>)}
+          {selectedLocation &&
+            (<Marker
+              coordinate={selectedLocation}
+              draggable
+              // onDragEnd={handleMarkerDrag}
               title="Your Location"
               description="here are you are"
               identifier="origin">
               <Image
-                source={require('../../../res/images/user.png')}
-                style={{width: 50, height: 50}}
+                source={require('../../../res/images/location.png')}
+                style={{ width: 50, height: 50 }}
               />
             </Marker>
-          )}
-          {/* <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
-              title='Your Location'
-              18.4604197875968, 73.83491983823866
-              description='here are you are'
-              identifier='origin' /> */}
-          <Marker
-            coordinate={{
-              latitude: 18.4604197875968,
-              longitude: 73.83491983823866,
-            }}
-            image={require('../../../res/images/location.png')}
-            title="Pickup & Drop Location"
-            description="Pickup and drop your Bike here"
-            identifier="origin">
-            <Image source={require} />
-          </Marker>
+            )}
+
+          {/* {currentUserLocation && selectedLocation && (
+            <MapViewDirections
+              origin={currentUserLocation}
+              destination={selectedLocation}
+              apikey={'AIzaSyDH4AwuOZVOcyPoSLfuYlywFJse1QjR_aw'}
+              strokeWidth={3}
+              strokeColor="blue"
+            />)} */}
+
         </MapView>
 
         <View style={styles.googleAutocomplete}>
           <GooglePlacesAutocomplete
             fetchDetails={true}
-            styles={{textInput: styles.input}}
+            styles={{ textInput: styles.input }}
             placeholder="Search your Location"
             onPress={(data, details = null) => {
-              setmarker({
+              // console.log('data', data);
+              setSelectedLocation({
                 latitude: details?.geometry?.location?.lat,
                 longitude: details?.geometry?.location?.lng,
               });
-              moveToLocation(
-                (latitude = details?.geometry?.location?.lat),
-                (longitude = details?.geometry?.location?.lng),
-              );
+              const newLocation = {
+                latitude: details?.geometry?.location?.lat,
+                longitude: details?.geometry?.location?.lng,
+              };
+              moveToLocation(newLocation.latitude, newLocation.longitude);
             }}
             query={{
               key: 'AIzaSyAtPscXSljaNjDxGRIucvlr51RyUn1QcOU',
@@ -212,14 +218,14 @@ const HomeScreen = ({navigation}) => {
       <TouchableOpacity
         onPress={() => navigation.navigate('RideSelect')}
         style={styles.Ridebutton}>
-        <Text style={{fontSize: 18, color: '#fff'}}>Book a Ride</Text>
+        <Text style={{ fontSize: 18, color: '#fff' }}>Book a Ride</Text>
       </TouchableOpacity>
       <BottomTab
-        onPressHome={()=>navigation.navigate(Screen.HOME)}
-         onPressRideHistory={()=>navigation.navigate(Screen.RIDE_HISTORY)}
-         onPressProfile={()=>navigation.navigate(Screen.PROFILE)}
-         activeTab='home'
-         />
+        onPressHome={() => navigation.navigate(Screen.HOME)}
+        onPressRideHistory={() => navigation.navigate(Screen.RIDE_HISTORY)}
+        onPressProfile={() => navigation.navigate(Screen.PROFILE)}
+        activeTab='home'
+      />
     </>
   );
 };
@@ -235,7 +241,7 @@ const styles = StyleSheet.create({
     top: 20,
     backgroundColor: 'white',
     shadowColor: 'black',
-    shadowOffset: {width: 2, height: 2},
+    shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 4,

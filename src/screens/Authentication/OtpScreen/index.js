@@ -12,7 +12,7 @@ import React, { useRef, useState, useEffect } from "react";
 import RNOtpVerify from 'react-native-otp-verify'
 import LinearGradient from "react-native-linear-gradient";
 import { StackActions } from '@react-navigation/native';
-
+import R from "../../../res/R";
 const OtpScreen = ({ route, navigation }) => {
   const { confirmResult } = route.params ?? { confirmResult: null }
   console.log('yyyyy', confirmResult);
@@ -85,14 +85,14 @@ const OtpScreen = ({ route, navigation }) => {
   }
   return (
     <>
-      <ImageBackground source={require("../../../res/images/background.png")} style={{ height: "100%", width: '100%', zIndex: -1 }} />
+      <ImageBackground source={R.images.background} style={styles.backgroundImgStyle}/>
       <Image
         style={styles.topImage}
-        source={require('../../../res/images/Wheel.png')}
+        source={R.images.Wheel_img}
       />
       <Image
         style={styles.BottomImage}
-        source={require('../../../res/images/Wheel.png')}
+        source={R.images.Wheel_img}
       />
       <LinearGradient colors={['#fff', '#BDBDBD']}
         style={styles.container}
@@ -102,57 +102,11 @@ const OtpScreen = ({ route, navigation }) => {
         <Text style={{}}>We have send OTP to this Number</Text>
         <Text style={{ fontSize: 16, fontWeight: '700', textDecorationLine: 'underline', paddingBottom: 10 }}>+91775703926</Text>
         <TextInput
-          // ref={pin1Ref}
           keyboardType={"number-pad"}
           maxLength={6}
           style={styles.input}
-          // onChange={(pin1) => {
-          //   setPin1(pin1);
-          //   if (pin1 != "") {
-          //     pin2Ref.current.focus();
-          //   }
-          // }}
           onChangeText={(text) => setCode(text)}
         />
-        {/* <TextInput
-            ref={pin2Ref}
-            keyboardType={"number-pad"}
-            maxLength={1}
-            style={styles.input}
-            onChange={(pin2) => {
-              setPin2(pin2);
-              if (pin2 != "") {
-                pin3Ref.current.focus();
-              }
-            }}
-          />
-          <TextInput
-            ref={pin3Ref}
-            keyboardType={"number-pad"}
-            maxLength={1}
-            style={styles.input}
-            onChange={(pin3) => {
-              setPin3(pin3);
-              if (pin3 != "") {
-                pin4Ref.current.focus();
-              }
-            }}
-          />
-          <TextInput
-            ref={pin4Ref}
-            keyboardType={"number-pad"}
-            maxLength={1}
-            style={styles.input}
-            onChange={(pin4) => {
-              setPin4(pin4);
-              if (pin4 != "") {
-                pin4Ref.current.focus();
-              }
-            }}
-          /> */}
-
-
-
         <TouchableOpacity style={styles.button}
           onPress={() => confirmCode()}
         >
@@ -168,6 +122,11 @@ const OtpScreen = ({ route, navigation }) => {
 export default OtpScreen;
 
 const styles = StyleSheet.create({
+  backgroundImgStyle:{
+    height:"100%",
+    width:'100%',
+    zIndex:-1
+  },
   mainBody: {
     flex: 1,
     justifyContent: 'center',

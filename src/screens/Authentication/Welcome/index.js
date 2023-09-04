@@ -1,18 +1,18 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-
+import R from '../../../res/R';
 const WelcomeScreen = ({navigation}) => {
   return (
     <>
-      <ImageBackground source={require("../../../res/images/background.png")} style={{height:"100%",width:'100%',zIndex:-1}}/>
+      <ImageBackground source={R.images.background} style={styles.backgroundImgStyle}/>
       <Image
         style={styles.topImage}
-        source={require('../../../res/images/Wheel.png')}
+        source={R.images.Wheel_img}
       />
       <Image
         style={styles.BottomImage}
-        source={require('../../../res/images/Wheel.png')}
+        source={R.images.Wheel_img}
       />
       <LinearGradient
         colors={['#fff', '#BDBDBD']}
@@ -40,6 +40,11 @@ const WelcomeScreen = ({navigation}) => {
 export default WelcomeScreen;
 
 const styles = StyleSheet.create({
+  backgroundImgStyle:{
+    height:"100%",
+    width:'100%',
+    zIndex:-1
+  },
   container: {
     position:'absolute',
     zIndex: 0,

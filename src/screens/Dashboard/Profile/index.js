@@ -37,7 +37,7 @@ const Profile = ({ navigation }) => {
         <Image source={R.images.profile_background} style={styles.profileBackground} />
         <View style={styles.subContainer}>
           <Image source={R.images.user_profile} style={styles.userProfile} />
-          <Text style={styles.nameText}>Vansh Nagarkoti</Text>
+          <Text style={styles.nameText}>Siddhant Kotambe</Text>
           <View style={styles.inputView}>
             <UserInput
               inputTitle={'Name'}
@@ -64,6 +64,9 @@ const Profile = ({ navigation }) => {
         <View style={{
           backgroundColor: '#222222',
           borderRadius: moderateScale(10),
+          // marginTop:hp(10),
+          position: 'absolute',
+          bottom: 110
 
         }}>
           <Button
@@ -91,9 +94,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileBackground: {
-    height: moderateScale(600),
+    height: moderateScale(550),
     width: moderateScale(350),
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    marginTop: hp(1)
   },
   subContainer: {
     position: 'absolute',
@@ -101,18 +105,18 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   userProfile: {
-    height: moderateScale(150),
-    width: moderateScale(150),
+    height: moderateScale(100),
+    width: moderateScale(100),
     resizeMode: 'contain',
   },
   nameText: {
     fontSize: moderateScale(14),
     fontFamily: R.Fonts.BOLD,
     color: R.colors.black,
-    bottom: 15
+    // bottom: 15
   },
   inputView: {
-    // marginVertical:2
+    marginTop: hp(1)
   }
 
 })

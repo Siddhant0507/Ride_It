@@ -31,7 +31,6 @@ const MainStack = () => {
         <Stack.Screen name={Screen.BOOKING_COMPLETE} component={BookingComplete} />
         <Stack.Screen name={Screen.RIDE_HISTORY} component={RideHistory} />
         <Stack.Screen name={Screen.RIDE_DETAIL} component={RideDetail} />
-
       </Stack.Navigator>
     </NavigationContainer>
   );

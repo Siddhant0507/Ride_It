@@ -18,6 +18,7 @@ import RNOtpVerify from 'react-native-otp-verify';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Screen } from '../../../constants/Screen';
+import R from '../../../res/R';
 const Signup = ({ navigation }) => {
   const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -109,14 +110,14 @@ const Signup = ({ navigation }) => {
   };
   return (
     <>
-      <ImageBackground source={require("../../../res/images/background.png")} style={{ height: "100%", width: '100%', zIndex: -1 }} />
+      <ImageBackground source={R.images.background} style={styles.backgroundImgStyle}/>
       <Image
         style={styles.topImage}
-        source={require('../../../res/images/Wheel.png')}
+        source={R.images.Wheel_img}
       />
       <Image
         style={styles.BottomImage}
-        source={require('../../../res/images/Wheel.png')}
+        source={R.images.Wheel_img}
       />
 
       <LinearGradient
@@ -176,6 +177,11 @@ const Signup = ({ navigation }) => {
 export default Signup;
 
 const styles = StyleSheet.create({
+  backgroundImgStyle:{
+    height:"100%",
+    width:'100%',
+    zIndex:-1
+  },
   container: {
     position: 'absolute',
     zIndex: 0,

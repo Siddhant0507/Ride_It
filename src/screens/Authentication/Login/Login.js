@@ -15,6 +15,7 @@ import auth from '@react-native-firebase/auth';
 import LinearGradient from 'react-native-linear-gradient';
 import RNOtpVerify from 'react-native-otp-verify';
 import { Screen } from '../../../constants/Screen';
+import R from '../../../res/R';
 const Login = ({ navigation }) => {
   const [PhoneNumber, setPhoneNumber] = useState('');
 
@@ -34,8 +35,8 @@ const Login = ({ navigation }) => {
       .catch(console.log);
   }, []);
 
- 
- const isButtonDisabled = !(PhoneNumber);
+
+  const isButtonDisabled = !(PhoneNumber);
 
   const signInWithPhoneNumber = async () => {
     try {
@@ -55,7 +56,7 @@ const Login = ({ navigation }) => {
       setIsLoading(false);
     }
   };
- 
+
 
 
   const handleCheckUserPhoneNumber = () => {
@@ -67,23 +68,19 @@ const Login = ({ navigation }) => {
 
   return (
     <>
-      <ImageBackground source={require("../../../res/images/background.png")} style={{ height: "100%", width: '100%', zIndex: -1 }} />
-      <Image
-        style={styles.topImage}
-        source={require('../../../res/images/Wheel.png')}
+      <ImageBackground source={R.images.background} style={styles.backgroundImg} />
+      <Image style={styles.topImage}
+        source={R.images.Wheel_img}
       />
       <Image
         style={styles.BottomImage}
-        source={require('../../../res/images/Wheel.png')}
+        source={R.images.Wheel_img}
       />
-      <LinearGradient
-        colors={['#fff', '#BDBDBD']}
+      <LinearGradient colors={['#fff', '#BDBDBD']}
         style={styles.container}
         useAngle={true}
         angle={180}>
-        <Text style={styles.heading}>
-          Login
-        </Text>
+        <Text style={styles.heading}>Login</Text>
         <Text style={{ paddingBottom: 20 }}> Verify Your account using OTP</Text>
         <TextInput
           maxLength={13}
@@ -101,7 +98,7 @@ const Login = ({ navigation }) => {
         </TouchableOpacity>
         {isLoading && <ActivityIndicator animating size={'large'} style={{ position: 'absolute', marginTop: 300 }} />
 
-}
+        }
         <Text style={{ padding: 20 }}>
           By continuing , You are agree to our Terms of Service and Privacy
           Policy
@@ -114,6 +111,11 @@ const Login = ({ navigation }) => {
 export default Login;
 
 const styles = StyleSheet.create({
+  backgroundImg: {
+    height: "100%",
+    width: '100%',
+    zIndex: -1
+  },
   container: {
     position: 'absolute',
     zIndex: 0,

@@ -16,7 +16,11 @@ const Icon = {
     active_ride: require('../res/icon/ride_history.png'),
     light_arrow: require('../res/icon/light_arrow.png'),
     contract_icon:require('../res/icon/contract_icon.png'),
-    checkBox_icon:require('../res/icon/check_box.png')
+    checkBox_icon:require('../res/icon/check_box.png'),
+    pay_arrow:require('../res/icon/pay_arrow.png'),
+    date_icon:require('../res/icon/date_time_icon.png'),
+    down_icon:require('../res/icon/down_arrow.png'),
+
 
 
 
