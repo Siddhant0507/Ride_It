@@ -5,7 +5,7 @@ import {collection, getDocs} from 'firebase/firestore';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {BookRide} from '../../../redux/reducer/authReducer';
-import { Screen } from '../../../constants/Screen';
+import { Screen } from '../../../navigation/Screen';
 const RideSelect = ({navigation}) => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);

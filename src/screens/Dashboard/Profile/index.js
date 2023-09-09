@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ImageBackground, Dimensions, Image } from 'reac
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserInput from '../../../components/TextInput';
 import BottomTab from '../../../components/BottomTab';
-import { Screen } from '../../../constants/Screen';
+import { Screen } from '../../../navigation/Screen';
 import R from '../../../res/R';
 import { moderateScale } from '../../../utills/Scalling';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';

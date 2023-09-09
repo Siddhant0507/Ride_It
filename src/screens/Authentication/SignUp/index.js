@@ -16,8 +16,9 @@ import { collection, addDoc, getDoc } from 'firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import RNOtpVerify from 'react-native-otp-verify';
 import LinearGradient from 'react-native-linear-gradient';
+import { Screen } from '../../../navigation/Screen';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Screen } from '../../../constants/Screen';
 import R from '../../../res/R';
 const Signup = ({ navigation }) => {
   const [username, setUserName] = useState('');
@@ -91,6 +92,7 @@ const Signup = ({ navigation }) => {
       driverLicense: licenseNumber,
     }).then(async (docRef) => {
       const userId = JSON.stringify(docRef.id)
+      // console.log("docRef data:", docRef);
       AsyncStorage.setItem('userId', userId)
       console.log('Document ID:', userId);
       const docSnap = await getDoc(docRef);
@@ -110,7 +112,7 @@ const Signup = ({ navigation }) => {
   };
   return (
     <>
-      <ImageBackground source={R.images.background} style={styles.backgroundImgStyle}/>
+      <ImageBackground source={R.images.background} style={styles.backgroundImgStyle} />
       <Image
         style={styles.topImage}
         source={R.images.Wheel_img}
@@ -177,10 +179,10 @@ const Signup = ({ navigation }) => {
 export default Signup;
 
 const styles = StyleSheet.create({
-  backgroundImgStyle:{
-    height:"100%",
-    width:'100%',
-    zIndex:-1
+  backgroundImgStyle: {
+    height: "100%",
+    width: '100%',
+    zIndex: -1
   },
   container: {
     position: 'absolute',

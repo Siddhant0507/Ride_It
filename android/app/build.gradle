@@ -108,10 +108,8 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-
- 
-
-  implementation(project(':react-native-maps')){
+    implementation project(':react-native-splash-screen')
+    implementation(project(':react-native-maps')){
       exclude group: 'com.google.android.gms'
   }
   implementation 'com.google.android.gms:play-services-base:18.0.1'
@@ -122,6 +120,7 @@ dependencies {
   implementation("com.google.firebase:firebase-analytics-ktx")
  implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
  implementation("com.google.firebase:firebase-auth-ktx")
+ 
 //   implementation 'com.google.firebase:firebase-auth'
 
 

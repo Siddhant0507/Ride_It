@@ -1,11 +1,14 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground} from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import React, { useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import R from '../../../res/R';
-const WelcomeScreen = ({navigation}) => {
+import { Screen } from '../../../navigation/Screen';
+import NavigationServices from '../../../navigation/NavigationServices';
+
+const WelcomeScreen = () => {
   return (
     <>
-      <ImageBackground source={R.images.background} style={styles.backgroundImgStyle}/>
+      <ImageBackground source={R.images.background} style={styles.backgroundImgStyle} />
       <Image
         style={styles.topImage}
         source={R.images.Wheel_img}
@@ -22,14 +25,14 @@ const WelcomeScreen = ({navigation}) => {
         <Text style={styles.heading}>Welcome</Text>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('Signup')}
+          onPress={() => NavigationServices.navigate(Screen.SIGN_UP)}
           style={styles.Signupbutton}>
-          <Text style={{fontSize: 18, color: '#000'}}>Signup</Text>
+          <Text style={{ fontSize: 18, color: '#000' }}>Signup</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => NavigationServices.navigate(Screen.LOGIN)}
           style={styles.Loginbutton}>
-          <Text style={{fontSize: 18, color: '#fff'}}>Login</Text>
+          <Text style={{ fontSize: 18, color: '#fff' }}>Login</Text>
         </TouchableOpacity>
       </LinearGradient>
 
@@ -40,13 +43,13 @@ const WelcomeScreen = ({navigation}) => {
 export default WelcomeScreen;
 
 const styles = StyleSheet.create({
-  backgroundImgStyle:{
-    height:"100%",
-    width:'100%',
-    zIndex:-1
+  backgroundImgStyle: {
+    height: "100%",
+    width: '100%',
+    zIndex: -1
   },
   container: {
-    position:'absolute',
+    position: 'absolute',
     zIndex: 0,
     width: '90%',
     height: '100%',
@@ -89,7 +92,7 @@ const styles = StyleSheet.create({
   },
 
   BottomImage: {
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
     height: '30%',
     width: '40%',
     position: 'absolute',

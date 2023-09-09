@@ -1,4 +1,5 @@
 export const Screen = {
+    SPLASH_SCREEN:'Splash',
     WELCOME_SCREEN: 'WelcomeScreen',
     LOGIN: 'Login',
     SIGN_UP: 'Signup',

@@ -1,7 +1,6 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import WelcomeScreen from '../../screens/Authentication/Welcome';
+import WelcomeScreen from '../../screens/Authentication/Welcome/index'
 import Login from '../../screens/Authentication/Login/Login';
 import OtpScreen from '../../screens/Authentication/OtpScreen';
 import Signup from '../../screens/Authentication/SignUp';
@@ -12,14 +11,15 @@ import RideSelect from '../../screens/BookRide/RideSelect';
 import BookingComplete from '../../screens/BookRide/BookingComplete';
 import RideDetail from '../../screens/BookRide/RideDetail';
 import Profile from '../../screens/Dashboard/Profile';
-import { Screen } from '../../constants/Screen';
+import { Screen } from '../Screen';
+import Splash from '../../screens/Authentication/SplashScreen';
+const Stack = createStackNavigator();
 
 const MainStack = () => {
-  const Stack = createStackNavigator();
   return (
-    <NavigationContainer independent={true}>
-      <Stack.Navigator initialRouteName={Screen.WELCOME_SCREEN}
+      <Stack.Navigator initialRouteName={Screen.SPLASH_SCREEN}
         screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={Screen.SPLASH_SCREEN} component={Splash} />
         <Stack.Screen name={Screen.WELCOME_SCREEN} component={WelcomeScreen} />
         <Stack.Screen name={Screen.LOGIN} component={Login} />
         <Stack.Screen name={Screen.SIGN_UP} component={Signup} />
@@ -32,7 +32,6 @@ const MainStack = () => {
         <Stack.Screen name={Screen.RIDE_HISTORY} component={RideHistory} />
         <Stack.Screen name={Screen.RIDE_DETAIL} component={RideDetail} />
       </Stack.Navigator>
-    </NavigationContainer>
   );
 };
 

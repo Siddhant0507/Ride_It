@@ -11,7 +11,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // import BottomNavigator from '../navigation/BottomNavigator';
 // import LinearGradient from 'react-native-linear-gradient';
 import BottomTab from '../../../components/BottomTab';
-import { Screen } from '../../../constants/Screen';
+import { Screen } from '../../../navigation/Screen';
+
 const HomeScreen = ({ navigation }) => {
   const mapRef = useRef(null);
 
@@ -181,6 +182,7 @@ const HomeScreen = ({ navigation }) => {
 
           {/* {currentUserLocation && selectedLocation && (
             <MapViewDirections
+
               origin={currentUserLocation}
               destination={selectedLocation}
               apikey={'AIzaSyDH4AwuOZVOcyPoSLfuYlywFJse1QjR_aw'}

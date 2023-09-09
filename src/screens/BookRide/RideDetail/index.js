@@ -5,7 +5,8 @@ import RazorpayCheckout from 'react-native-razorpay';
 import { collection, addDoc, updateDoc } from 'firebase/firestore';
 import { app, database } from '../../../../FirebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Screen } from '../../../constants/Screen'; import R from '../../../res/R'
+import { Screen } from '../../../navigation/Screen';
+ import R from '../../../res/R'
 import Header from '../../../components/Header'
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { moderateScale } from '../../../utills/Scalling';

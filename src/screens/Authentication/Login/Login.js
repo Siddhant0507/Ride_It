@@ -14,7 +14,6 @@ import React, { useState, useEffect } from 'react';
 import auth from '@react-native-firebase/auth';
 import LinearGradient from 'react-native-linear-gradient';
 import RNOtpVerify from 'react-native-otp-verify';
-import { Screen } from '../../../constants/Screen';
 import R from '../../../res/R';
 const Login = ({ navigation }) => {
   const [PhoneNumber, setPhoneNumber] = useState('');

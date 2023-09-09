@@ -9,7 +9,7 @@ const { height, width } = Dimensions.get('window')
 import { moderateScale } from '../../../utills/Scalling';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import BottomTab from '../../../components/BottomTab';
-import { Screen } from '../../../constants/Screen';
+import { Screen } from '../../../navigation/Screen';
 const RideHistory = ({ navigation }) => {
 
   const [userId, setUserId] = useState('')
